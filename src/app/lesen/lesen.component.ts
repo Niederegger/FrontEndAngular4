@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params }   from '@angular/router';
-// import { Location }                 from '@angular/common';
+import { ActivatedRoute, Params, Router }   from '@angular/router';
 import { RestProviderService } from "../rest-provider.service";
 
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +20,12 @@ export class LesenComponent implements OnInit {
   dataContainer;  // data of fetchedData
   clientIP;
 
-  ngOnInit(): void {
+  ngOnInit(): void {  }
+
+  search(searchRequest){
+    // hackerish but works
+    let str : string = (searchRequest+"");
+    this.isin = str.split("/", 3)[2];
     console.log(this.isin);
     if (this.isin.length == 12) {
       this.rps.getRequest('/api/wp/info?v=' + this.isin).subscribe(
@@ -44,7 +48,7 @@ export class LesenComponent implements OnInit {
     this.error = "Couldn't fetch Information for this ISIN: " + this.isin + "!";
   }
 
-  completeCallback(){
+  completeCallback(){ // validates whether data could be fetched or not
     if (this.fetchedData['keyOrder'] == null) {
       this.valid = false;
       this.error = "Couldn't fetch Information for this ISIN: " + this.isin + "!";
@@ -64,8 +68,8 @@ export class LesenComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute,public rps: RestProviderService) {
-    this.route.params.subscribe( params => this.isin = params['v'] );
+  constructor(private route: ActivatedRoute,public rps: RestProviderService, private router: Router) {
+    this.router.events.subscribe(path  => { this.search(path['url']) }); // eventlistener on url change
  }
 
 }

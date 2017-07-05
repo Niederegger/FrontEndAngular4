@@ -12,10 +12,10 @@ import 'rxjs/add/operator/map';
   providers: [RestProviderService]
 })
 export class SucheComponent implements OnInit {
-  val       // stores isin input
-  loader    // stores status
+  val;       // stores isin input
+  loader;    // stores status
 
-  results   // stores autocomplete result
+  results;   // stores autocomplete result
 
   constructor(public restProviderServ: RestProviderService,private _router: Router) {  }
 
@@ -27,7 +27,7 @@ export class SucheComponent implements OnInit {
     }
   }
 
-  gotoDetail(): void {
+  gotoDetail() {
     if (this.val.length == 12) {
       this._router.navigateByUrl('/lesen/'+this.val);
    } else {

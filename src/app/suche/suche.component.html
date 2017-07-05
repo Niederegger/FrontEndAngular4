@@ -1,5 +1,5 @@
 <div class="input-group">
-  <input type="text" list="suggestions" (keyup)="keyEvent()" class="form-control" placeholder="Isin" [(ngModel)]="val" (keyup.enter)="gotoDetail()">
+  <input type="text" list="suggestions" maxlength="12" (keyup)="keyEvent()" class="form-control" placeholder="Isin" [(ngModel)]="val" (keyup.enter)="gotoDetail()">
 
   <datalist *ngIf="results != null && results.length != 0" id="suggestions">
     <option *ngFor="let res of results">{{res}}</option>
