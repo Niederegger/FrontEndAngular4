@@ -19,14 +19,19 @@ export class LesenComponent implements OnInit {
   keyOrder;       // keyOrder of fetchedData
   dataContainer;  // data of fetchedData
   clientIP;
+  prevIsin;
 
   ngOnInit(): void {  }
 
   search(searchRequest){
+    this.prevIsin = this.isin;
     // hackerish but works
     let str : string = (searchRequest+"");
     this.isin = str.split("/", 3)[2];
     console.log(this.isin);
+    // eventListener on Url gets triggered 3 times
+    // with this lookup the 2 redundant times are filterted out
+    if(this.prevIsin != this.isin)
     if (this.isin.length == 12) {
       this.rps.getRequest('/api/wp/info?v=' + this.isin).subscribe(
         data => this.fetchedData = data,

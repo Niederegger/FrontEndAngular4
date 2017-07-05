@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { MasterValueComponent } from './master-value/master-value.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { VersionsgeschichteComponent } from './versionsgeschichte/versionsgeschichte.component';
@@ -19,11 +18,12 @@ import { AnmeldenComponent } from './anmelden/anmelden.component';
 import { QuellenComponent } from './quellen/quellen.component';
 import { RestProviderService } from './rest-provider.service';
 import { DefaultComponent } from './default/default.component';
+import { UeberWpWikiComponent } from './ueber-wp-wiki/ueber-wp-wiki.component';
+import { NutzungsbedingungenComponent } from './nutzungsbedingungen/nutzungsbedingungen.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MasterValueComponent,
     NavComponent,
     FooterComponent,
     VersionsgeschichteComponent,
@@ -36,6 +36,9 @@ import { DefaultComponent } from './default/default.component';
     AnmeldenComponent,
     QuellenComponent,
     DefaultComponent,
+    UeberWpWikiComponent,
+    NutzungsbedingungenComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,11 @@ import { DefaultComponent } from './default/default.component';
       { path: 'datenschutzerklaerung', component: DatenschutzerklaerungComponent },
       { path: 'versionsgeschichte', component: VersionsgeschichteComponent },
       { path: 'bearbeiten', component: BearbeitenComponent },
+      { path: 'impressum', component: ImpressumComponent },
+      { path: 'datenschutzerklaerung', component: DatenschutzerklaerungComponent },
+      { path: 'ueber', component: UeberWpWikiComponent },
+      { path: 'nutzungsbedingungen', component: NutzungsbedingungenComponent },
+      { path: 'einstellungen', component: EinstellungComponent },
 
       { path: '**', redirectTo: '' }
     ])

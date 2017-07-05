@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MasterValueComponent } from './master-value.component';
+import { NutzungsbedingungenComponent } from './nutzungsbedingungen.component';
 
-describe('MasterValueComponent', () => {
-  let component: MasterValueComponent;
-  let fixture: ComponentFixture<MasterValueComponent>;
+describe('NutzungsbedingungenComponent', () => {
+  let component: NutzungsbedingungenComponent;
+  let fixture: ComponentFixture<NutzungsbedingungenComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MasterValueComponent ]
+      declarations: [ NutzungsbedingungenComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MasterValueComponent);
+    fixture = TestBed.createComponent(NutzungsbedingungenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
