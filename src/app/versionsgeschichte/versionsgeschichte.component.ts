@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SimpleGlobal} from 'ng2-simple-global';
 
 @Component({
   selector: 'app-versionsgeschichte',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VersionsgeschichteComponent implements OnInit {
 
-  constructor() { }
+    constructor(public sg: SimpleGlobal) { }
 
-  ngOnInit() {
-  }
+    ngOnInit(): void {
+      this.sg['state'] = 'versionsgeschichte';
+    }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SimpleGlobal} from 'ng2-simple-global';
 
 @Component({
   selector: 'app-quellen',
@@ -14,9 +15,11 @@ instrumentClass
 currency
 issuerLei
 tradingVenue
-  constructor() { }
 
-  ngOnInit() {
+  constructor(public sg: SimpleGlobal) { }
+
+  ngOnInit(): void {
+    this.sg['state'] = 'quellen';
   }
 
 }

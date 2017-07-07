@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { SimpleGlobal } from 'ng2-simple-global';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -38,7 +39,6 @@ import { NutzungsbedingungenComponent } from './nutzungsbedingungen/nutzungsbedi
     DefaultComponent,
     UeberWpWikiComponent,
     NutzungsbedingungenComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -52,7 +52,7 @@ import { NutzungsbedingungenComponent } from './nutzungsbedingungen/nutzungsbedi
       { path: 'einstellungen', component: EinstellungComponent },
       { path: 'datenschutzerklaerung', component: DatenschutzerklaerungComponent },
       { path: 'versionsgeschichte', component: VersionsgeschichteComponent },
-      { path: 'bearbeiten', component: BearbeitenComponent },
+      { path: 'bearbeiten/:v', component: BearbeitenComponent },
       { path: 'impressum', component: ImpressumComponent },
       { path: 'datenschutzerklaerung', component: DatenschutzerklaerungComponent },
       { path: 'ueber', component: UeberWpWikiComponent },
@@ -62,7 +62,7 @@ import { NutzungsbedingungenComponent } from './nutzungsbedingungen/nutzungsbedi
       { path: '**', redirectTo: '' }
     ])
   ],
-  providers: [],
+  providers: [SimpleGlobal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

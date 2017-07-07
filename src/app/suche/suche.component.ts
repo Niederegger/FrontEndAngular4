@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestProviderService } from "../rest-provider.service";
 import { Router } from '@angular/router';
+import {SimpleGlobal} from 'ng2-simple-global';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -17,7 +18,10 @@ export class SucheComponent implements OnInit {
 
   results;   // stores autocomplete result
 
-  constructor(public restProviderServ: RestProviderService,private _router: Router) {  }
+  constructor(
+    private restProviderServ: RestProviderService,
+    private _router: Router,
+    public sg: SimpleGlobal) {    }
 
   keyEvent() {
     if (this.val.length > 0 && this.val.length <= 12) {
@@ -29,12 +33,16 @@ export class SucheComponent implements OnInit {
 
   gotoDetail() {
     if (this.val.length == 12) {
+      this.sg["isin"] = this.val;
       this._router.navigateByUrl('/lesen/'+this.val);
    } else {
      this.loader = 'ISIN has to have a length of 12!';
    }
   }
 
-  ngOnInit(): void { }
+
+
+  ngOnInit(): void {
+  }
 
 }

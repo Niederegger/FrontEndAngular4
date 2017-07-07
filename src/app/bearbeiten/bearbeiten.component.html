@@ -1,3 +1,15 @@
-<p>
-  In Bearbeitung.
-</p>
+<div class="container">
+  <button (click)="saveChanges()" class="btn btn-default" type="button">Suche</button>
+  <div *ngFor="let key of keyOrder">
+    <div class="row" *ngFor="let inf of dataContainer[key].info; let i = index">
+      <div class="col-lg-3 col-12"><b class="pull-left" align="left" *ngIf="i==0">{{key}}:</b></div>
+      <div class="col-lg-9 pull-right">
+        <span class="pull-left" *ngIf="inf.lvl2!=''">{{inf.lvl2}}:&nbsp;</span>
+        <br *ngIf="inf.lvl2!=''">
+        <input style="width:100%;" type="text"  [(ngModel)]="inf.val"  class="pull-left"/>
+        <!-- value="{{inf.val}}" -->
+      </div>
+    </div>
+    <br>
+  </div>
+</div>

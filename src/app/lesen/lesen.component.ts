@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router }   from '@angular/router';
 import { RestProviderService } from "../rest-provider.service";
+import {SimpleGlobal} from 'ng2-simple-global';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -21,7 +22,9 @@ export class LesenComponent implements OnInit {
   clientIP;
   prevIsin;
 
-  ngOnInit(): void {  }
+  ngOnInit(): void {
+    this.sg['state'] = "lesen";
+  }
 
   search(searchRequest){
     this.prevIsin = this.isin;
@@ -61,6 +64,7 @@ export class LesenComponent implements OnInit {
       this.valid = true;
       this.keyOrder = this.fetchedData['keyOrder'];
       this.dataContainer = this.fetchedData['data'];
+      this.sg['fetchedData'] = this.fetchedData;
     }
   }
 
@@ -73,8 +77,13 @@ export class LesenComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute,public rps: RestProviderService, private router: Router) {
-    this.router.events.subscribe(path  => { this.search(path['url']) }); // eventlistener on url change
+  constructor(private route: ActivatedRoute,private rps: RestProviderService, private router: Router,public sg: SimpleGlobal) {
+    // if(this.sg['isin']){
+    //   console.log(this.sg['isin']);
+    //   this.search(this.sg['isin']);
+    // } else {
+      this.router.events.subscribe(path  => { this.search(path['url']) }); // eventlistener on url change
+    // }
  }
 
 }

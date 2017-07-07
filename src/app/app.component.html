@@ -1,14 +1,27 @@
+<!-- <div class="container">
+  <h1>Debug Global Scope</h1>
+
+  isin.{{sg['isin']}}.
+  <br>
+  state.{{sg['state']}}.
+  <br>
+  error.{{sg['error']}}.
+  <br>
+  fetchedData.{{sg['fetchedData'] | json }}.
+  <br>
+
+</div> -->
+
 
 <div class="container">
+      <div class="container">
+        <div class="starter-template">
+          <h1>Wp Wiki <font size="4">(Demo)</font></h1>
+          <app-nav></app-nav>
+          <app-suche  *ngIf="sg['state']=='start'"></app-suche>
+          <router-outlet></router-outlet>
 
-  <div class="container">
-    <div class="starter-template">
-      <h1>Wp Wiki <font size="4">(Demo)</font></h1>
-      <app-nav></app-nav>
-      <app-suche></app-suche>
-      <router-outlet></router-outlet>
-
-      <!--
+          <!--
       <h1>WP Wiki</h1>
       <hr><h3>Suche</h3><hr>
       <app-suche></app-suche>
@@ -19,8 +32,7 @@
       <hr><h3>Quellen</h3><hr>
       <app-quellen></app-quellen>
       -->
-    </div>
-  </div>
+        </div>
+      </div>
 </div>
-<br>
 <app-footer></app-footer>

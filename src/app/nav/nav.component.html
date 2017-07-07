@@ -1,23 +1,23 @@
-<nav class="navbar navbar-toggleable-md">
+<nav *ngIf="sg['state']!='start'" class="navbar navbar-toggleable-md">
   <ul class="nav navbar-nav mr-auto">
-    <li class="nav-item active">
-      <a class="nav-link" routerLink="">Start</a>
+    <li class="{{isA('start')}} nav-item">
+      <a class="nav-link" routerLink="/">Start</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/lesen">Lesen</a>
+    <li class="{{isA('lesen')}} nav-item">
+      <a class="nav-link" routerLink="/lesen/{{sg['isin']}}">Lesen</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/quellen">Quellen</a>
+    <li class="{{isA('quellen')}} nav-item">
+      <a class="nav-link" routerLink="/quellen/{{sg['isin']}}">Quellen</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/bearbeiten">Bearbeiten</a>
+    <li class="{{isA('bearbeiten')}} nav-item">
+      <a class="nav-link" routerLink="/bearbeiten/{{sg['isin']}}">Bearbeiten</a>
     </li>
-    <li class="nav-item">
+    <li class="{{isA('versionsgeschichte')}} nav-item">
       <a class="nav-link" routerLink="/versionsgeschichte">Versionsgeschichte</a>
     </li>
   </ul>
   <ul class="nav navbar-nav">
-    <li class="nav-item">
+    <li class="{{isA('anmelden')}} nav-item">
       <a class="nav-link" routerLink="/anmelden">Anmelden</a>
     </li>
   </ul>
