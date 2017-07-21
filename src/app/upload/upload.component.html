@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row"> <!-- Unternehmen -->
+    <div class="col-lg-3 col-12"><b class="pull-left" align="left">Unternehmen:</b></div>
+    <div class="col-lg-9 pull-right">
+      <input style="width:100%;" type="text"  [(ngModel)]="establishment"  class="pull-left"/>
+    </div>
+  </div>
+  <br>
+  <div class="row"> <!-- Kommentar -->
+    <div class="col-lg-3 col-12"><b class="pull-left" align="left">Kommentar:</b></div>
+    <div class="col-lg-9 pull-right">
+      <input style="width:100%;" type="text"  [(ngModel)]="userComment"  class="pull-left"/>
+    </div>
+  </div>
+  <br>
+  <button (click)="upload()" class="btn btn-default" type="button">Upload</button>
+  <input style="border:solid;" #fileInput [(ngModel)]="fileUpload"  (change)="getFiles($event)" type="file" accept=".pdf, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+</div>
+{{reqStat}}

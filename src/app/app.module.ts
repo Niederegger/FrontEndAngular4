@@ -21,6 +21,8 @@ import { RestProviderService } from './rest-provider.service';
 import { DefaultComponent } from './default/default.component';
 import { UeberWpWikiComponent } from './ueber-wp-wiki/ueber-wp-wiki.component';
 import { NutzungsbedingungenComponent } from './nutzungsbedingungen/nutzungsbedingungen.component';
+import { UploadComponent } from './upload/upload.component';
+import { FilesComponent } from './files/files.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { NutzungsbedingungenComponent } from './nutzungsbedingungen/nutzungsbedi
     DefaultComponent,
     UeberWpWikiComponent,
     NutzungsbedingungenComponent,
+    UploadComponent,
+    FilesComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +62,8 @@ import { NutzungsbedingungenComponent } from './nutzungsbedingungen/nutzungsbedi
       { path: 'ueber', component: UeberWpWikiComponent },
       { path: 'nutzungsbedingungen', component: NutzungsbedingungenComponent },
       { path: 'einstellungen', component: EinstellungComponent },
+      { path: 'upload', component: UploadComponent },
+      { path: 'files', component: FilesComponent },
 
       { path: '**', redirectTo: '' }
     ])

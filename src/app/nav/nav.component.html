@@ -1,4 +1,4 @@
-<nav *ngIf="sg['state']!='start'" class="navbar navbar-toggleable-md">
+<nav class="navbar navbar-toggleable-md">
   <ul class="nav navbar-nav mr-auto">
     <li class="{{isA('start')}} nav-item">
       <a class="nav-link" routerLink="/">Start</a>
@@ -14,6 +14,12 @@
     </li>
     <li class="{{isA('versionsgeschichte')}} nav-item">
       <a class="nav-link" routerLink="/versionsgeschichte">Versionsgeschichte</a>
+    </li>
+    <li class="{{isA('upload')}} nav-item">
+      <a class="nav-link" routerLink="/upload">Upload</a>
+    </li>
+    <li class="{{isA('files')}} nav-item">
+      <a class="nav-link" routerLink="/files">Files</a>
     </li>
   </ul>
   <ul class="nav navbar-nav">

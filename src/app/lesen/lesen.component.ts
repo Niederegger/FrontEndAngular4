@@ -35,7 +35,7 @@ export class LesenComponent implements OnInit {
     // eventListener on Url gets triggered 3 times
     // with this lookup the 2 redundant times are filterted out
     if(this.prevIsin != this.isin)
-    if (this.isin.length == 12) {
+    if (this.isin.length == 12 || this.isin.length == 6) {
       this.rps.getRequest('/api/wp/info?v=' + this.isin).subscribe(
         data => this.fetchedData = data,
         // The 2nd callback handles errors.

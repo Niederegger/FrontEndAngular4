@@ -1,0 +1,20 @@
+<div class="container" class="table">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-left">Unternehmen</th>
+        <th class="text-left">Datei</th>
+        <th class="text-left">Kommentar</th>
+        <th class="text-left">Timestamp</th>
+      </tr>
+    </thead>
+    <tbody class="table-hover">
+      <tr *ngFor="let fd of fileData">
+         <td class="text-left">{{ fd.establishment }}</td>
+         <td class="text-left"><a href="/api/file/download?fn={{fd.fileName}}&ts={{prepareTs(fd.timeStamp)}}">{{ fd.fileName }}</a></td>
+         <td class="text-left">{{ fd.comment }}</td>
+         <td class="text-left">{{ cutTimestamp(fd.timeStamp) }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,42 +1,45 @@
 <div>
   <!-- Anmeldung -->
+  <p style="color: red;">{{validator}}</p>
   <div>
     <h2>Anmeldung</h2>
-    <form role="form">
-      <div class="form-content">
+    <div class="form-content">
 
-        <div class="form-group row" align="center">
-          <label style="float:left;" class="col-sm-12 col-md-4" for="lun">Benutzername: </label> <input class="col-sm-12 col-md-6" type="text" id="lun">
-        </div>
-        <div class="form-group row" align="center">
-          <label style="float:left;" class="col-sm-12 col-md-4" for="lpw">Password: </label> <input class="col-sm-12 col-md-6" type="password" id="lpw">
-        </div>
-        <button class="btn btn-default" type="button">Anmelden</button>
+      <div class="form-group row" align="center">
+        <label style="float:left;" class="col-sm-12 col-md-4" for="lun">E-Mail Adresse: </label>
+        <input [(ngModel)]="emailLogin" class="col-sm-12 col-md-6" type="text" id="lun">
       </div>
-    </form>
+      <div class="form-group row" align="center">
+        <label style="float:left;" class="col-sm-12 col-md-4" for="lpw">Password: </label>
+        <input [(ngModel)]="passwordLogin" class="col-sm-12 col-md-6" type="password" id="lpw">
+      </div>
+      <button (click)="login()" class="btn btn-default" type="button">Anmelden</button>
+    </div>
   </div>
   <hr>
   <!-- Registrierung -->
   <div>
     <h2>Neu hier?
     <br/>Kostenlos regestrieren:</h2>
-    <form role="form">
-      <div class="form-content">
+    <div class="form-content">
 
-        <div class="form-group row" align="center">
-          <label style="float:left;" class="col-sm-12 col-md-4" for="run">Benutzername: </label> <input class="col-sm-12 col-md-6" type="text" id="run">
-        </div>
-        <div class="form-group row" align="center">
-          <label style="float:left;" class="col-sm-12 col-md-4" for="rem">E-Mail Adresse:</label> <input class="col-sm-12 col-md-6" type="email" id="rem"> </div>
-        <div class="form-group row" align="center">
-          <label style="float:left;" class="col-sm-12 col-md-4" for="rgp">gewünschtes Password:</label> <input class="col-sm-12 col-md-6" type="password" id="rgp">
-        </div>
-        <div class="form-group row" align="center">
-          <label style="float:left;" class="col-sm-12 col-md-4" for="rpw">Password wiederholen:</label> <input class="col-sm-12 col-md-6" type="password" id="rpw">
-        </div>
-
-        <button class="btn btn-default" type="button">Registrieren</button>
+      <div class="form-group row" align="center">
+        <label style="float:left;" class="col-sm-12 col-md-4" for="run">Benutzername: </label>
+        <input [(ngModel)]="usernameRegister" class="col-sm-12 col-md-6" type="text" id="run">
       </div>
-    </form>
+      <div class="form-group row" align="center">
+        <label style="float:left;" class="col-sm-12 col-md-4" for="rem">E-Mail Adresse:</label>
+        <input [(ngModel)]="eMailRegister" class="col-sm-12 col-md-6" type="email" id="rem"> </div>
+      <div class="form-group row" align="center">
+        <label style="float:left;" class="col-sm-12 col-md-4" for="rgp">gewünschtes Password:</label>
+        <input [(ngModel)]="passwordRegister" class="col-sm-12 col-md-6" type="password" id="rgp">
+      </div>
+      <div class="form-group row" align="center">
+        <label style="float:left;" class="col-sm-12 col-md-4" for="rpw">Password wiederholen:</label>
+        <input [(ngModel)]="passwordRegisterRep" class="col-sm-12 col-md-6" type="password" id="rpw">
+      </div>
+
+      <button (click)="register()" class="btn btn-default" type="button">Registrieren</button>
+    </div>
   </div>
 </div>
