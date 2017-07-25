@@ -12,7 +12,7 @@ import { VersionsgeschichteComponent } from './versionsgeschichte/versionsgeschi
 import { ImpressumComponent } from './impressum/impressum.component';
 import { DatenschutzerklaerungComponent } from './datenschutzerklaerung/datenschutzerklaerung.component';
 import { EinstellungComponent } from './einstellung/einstellung.component';
-import { LesenComponent } from './lesen/lesen.component';
+import { DetailsComponent } from './details/details.component';
 import { BearbeitenComponent } from './bearbeiten/bearbeiten.component';
 import { SucheComponent } from './suche/suche.component';
 import { AnmeldenComponent } from './anmelden/anmelden.component';
@@ -33,7 +33,7 @@ import { FilesComponent } from './files/files.component';
     ImpressumComponent,
     DatenschutzerklaerungComponent,
     EinstellungComponent,
-    LesenComponent,
+    DetailsComponent,
     BearbeitenComponent,
     SucheComponent,
     AnmeldenComponent,
@@ -51,19 +51,19 @@ import { FilesComponent } from './files/files.component';
     RouterModule.forRoot([
       { path: 'anmelden', component: AnmeldenComponent },
       { path: '', component: DefaultComponent },
-      { path: 'lesen/:v', component: LesenComponent },
-      { path: 'quellen/:v', component: QuellenComponent },
-      { path: 'einstellungen', component: EinstellungComponent },
+      { path: 'details/:v', component: DetailsComponent },
+      // { path: 'quellen/:v', component: QuellenComponent },
+      // { path: 'einstellungen', component: EinstellungComponent },
       { path: 'datenschutzerklaerung', component: DatenschutzerklaerungComponent },
-      { path: 'versionsgeschichte', component: VersionsgeschichteComponent },
+      // { path: 'versionsgeschichte', component: VersionsgeschichteComponent },
       { path: 'bearbeiten/:v', component: BearbeitenComponent },
       { path: 'impressum', component: ImpressumComponent },
       { path: 'datenschutzerklaerung', component: DatenschutzerklaerungComponent },
       { path: 'ueber', component: UeberWpWikiComponent },
-      { path: 'nutzungsbedingungen', component: NutzungsbedingungenComponent },
-      { path: 'einstellungen', component: EinstellungComponent },
-      { path: 'upload', component: UploadComponent },
-      { path: 'files', component: FilesComponent },
+      // { path: 'nutzungsbedingungen', component: NutzungsbedingungenComponent },
+      // { path: 'einstellungen', component: EinstellungComponent },
+      // { path: 'upload/:v', component: UploadComponent },
+      { path: 'files/:v', component: FilesComponent },
 
       { path: '**', redirectTo: '' }
     ])

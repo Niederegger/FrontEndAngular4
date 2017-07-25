@@ -1,30 +1,31 @@
 <nav class="navbar navbar-toggleable-md">
   <ul class="nav navbar-nav mr-auto">
     <li class="{{isA('start')}} nav-item">
-      <a class="nav-link" routerLink="/">Start</a>
+      <a class="nav-link" routerLink="/">Suche</a>
     </li>
-    <li class="{{isA('lesen')}} nav-item">
-      <a class="nav-link" routerLink="/lesen/{{sg['isin']}}">Lesen</a>
+    <li *ngIf="sg['fetchedData']" class="{{isA('details')}} nav-item">
+      <a class="nav-link" routerLink="/details/{{sg['isin']}}">Details</a>
     </li>
-    <li class="{{isA('quellen')}} nav-item">
+    <!-- <li *ngIf="sg['fetchedData']" class="{{isA('quellen')}} nav-item">
       <a class="nav-link" routerLink="/quellen/{{sg['isin']}}">Quellen</a>
-    </li>
-    <li class="{{isA('bearbeiten')}} nav-item">
+    </li> -->
+    <li *ngIf="sg['fetchedData']" class="{{isA('bearbeiten')}} nav-item">
       <a class="nav-link" routerLink="/bearbeiten/{{sg['isin']}}">Bearbeiten</a>
     </li>
-    <li class="{{isA('versionsgeschichte')}} nav-item">
+    <!-- <li class="{{isA('versionsgeschichte')}} nav-item">
       <a class="nav-link" routerLink="/versionsgeschichte">Versionsgeschichte</a>
-    </li>
-    <li class="{{isA('upload')}} nav-item">
-      <a class="nav-link" routerLink="/upload">Upload</a>
-    </li>
-    <li class="{{isA('files')}} nav-item">
-      <a class="nav-link" routerLink="/files">Files</a>
+    </li> -->
+    <!-- <li *ngIf="sg['isin']" class="{{isA('upload')}} nav-item">
+      <a class="nav-link" routerLink="/upload/{{sg['isin']}}">Upload</a>
+    </li> -->
+    <li *ngIf="sg['isin']" class="{{isA('files')}} nav-item">
+      <a class="nav-link" routerLink="/files/{{sg['isin']}}">Publikationen</a>
     </li>
   </ul>
-  <ul class="nav navbar-nav">
+
+  <!-- <ul class="nav navbar-nav">
     <li class="{{isA('anmelden')}} nav-item">
       <a class="nav-link" routerLink="/anmelden">Anmelden</a>
     </li>
-  </ul>
+  </ul> -->
 </nav>

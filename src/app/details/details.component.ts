@@ -6,12 +6,12 @@ import {SimpleGlobal} from 'ng2-simple-global';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'app-lesen',
-  templateUrl: './lesen.component.html',
-  styleUrls: ['./lesen.component.css'],
+  selector: 'app-details',
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.css'],
   providers: [RestProviderService]
 })
-export class LesenComponent implements OnInit {
+export class DetailsComponent implements OnInit {
 
   fetchedData;    // return value of rest request
   isin;           // current showing isin values
@@ -23,7 +23,7 @@ export class LesenComponent implements OnInit {
   prevIsin;
 
   ngOnInit(): void {
-    this.sg['state'] = "lesen";
+    this.sg['state'] = "details";
   }
 
   search(searchRequest){

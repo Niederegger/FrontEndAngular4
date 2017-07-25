@@ -1,20 +1,66 @@
+
+
 <div class="container" class="table">
+  <p class="pull-left"><b>ISIN: {{sg['isin']}}</b></p>
+  <br>
+  <p>{{reqStat}}</p>
   <table>
     <thead>
       <tr>
-        <th class="text-left">Unternehmen</th>
-        <th class="text-left">Datei</th>
+        <th class="text-left">Quelle</th>
+        <th class="text-left">Typ</th>
+        <th class="text-left">Erstellung</th>
         <th class="text-left">Kommentar</th>
-        <th class="text-left">Timestamp</th>
+        <th class="text-left">Datei</th>
+        <th></th>
       </tr>
     </thead>
     <tbody class="table-hover">
       <tr *ngFor="let fd of fileData">
-         <td class="text-left">{{ fd.establishment }}</td>
-         <td class="text-left"><a href="/api/file/download?fn={{fd.fileName}}&ts={{prepareTs(fd.timeStamp)}}">{{ fd.fileName }}</a></td>
-         <td class="text-left">{{ fd.comment }}</td>
-         <td class="text-left">{{ cutTimestamp(fd.timeStamp) }}</td>
+        <td class="text-left">{{ fd.dataOrigin }}</td>
+        <td class="text-left">{{ fd.dataType }}</td>
+        <td class="text-left">{{ cutTimestamp(fd.timeStamp) }}</td>
+        <td class="text-left">{{ fd.comment }}</td>
+        <td class="text-left"><a href="/api/file/download?fn={{fd.fileName}}&ts={{prepareTs(fd.timeStamp)}}">{{ fd.fileName }}</a></td>
+        <td>
+          <button (click)="removeFile(fd.fileName, prepareTs(fd.timeStamp))" class="btn btn-default" type="button">löschen</button>
+        </td>
       </tr>
     </tbody>
   </table>
+<hr>
+  <hr>
+  <div style="solid:1px solid;" class="">
+    <span class="pull-left"><b>Dokument einstellen:</b></span>
+  <!-- style="border:1px solid;" -->
+    <br>
+    <br>
+    <div class="row"> <!-- Quelle -->
+      <div class="col-lg-3 col-12"><span class="pull-left" align="left"><b>Quelle:</b> *</span></div>
+      <div class="col-lg-9 pull-right">
+        <input style="width:66%;" type="text"  [(ngModel)]="dataOrigin"  class="pull-left"/>
+      </div>
+    </div>
+    <br>
+    <div class="row"> <!-- Dateityp -->
+      <div class="col-lg-3 col-12"><span class="pull-left" align="left"><b>Typ:</b> *</span></div>
+      <div class="col-lg-9 pull-right">
+        <input style="width:66%;" type="text"  [(ngModel)]="dataType"  class="pull-left"/>
+      </div>
+    </div>
+    <br>
+    <div class="row"> <!-- Kommentar -->
+      <div class="col-lg-3 col-12"><b class="pull-left" align="left">Kommentar:</b></div>
+      <div class="col-lg-9 pull-right">
+        <input style="width:66%;" type="text"  [(ngModel)]="userComment"  class="pull-left"/>
+      </div>
+    </div><br>
+    <span class="pull-left"><font size="3">* Pflichtfelder</font></span>
+    <input  #fileInput [(ngModel)]="fileUpload"  (change)="getFiles($event)" type="file" accept=".pdf, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+    <button (click)="upload()" class="btn btn-default" type="button">Upload</button>
+
+    <br>
+  </div>
+  <hr>
+
 </div>

@@ -8,16 +8,11 @@ import 'rxjs/add/observable/fromPromise';
 export class RestProviderService {
 
   headersJson : any;
-  headersMultiPart : any;
 
   constructor(private http: Http) {
     this.headersJson = new Headers();
     this.headersJson.append('Content-Type', 'application/json');
     this.headersJson.append('Access-Control-Allow-Origin', '*');
-    this.headersMultiPart = new Headers();
-    delete this.headersMultiPart['Content-Type'];
-    this.headersJson.append('Content-Type', 'multipart/form-data');
-    this.headersMultiPart.append('Access-Control-Allow-Origin', '*');
   }
 
   getRequest(url){
@@ -25,7 +20,7 @@ export class RestProviderService {
   }
 
   postRequest(url, data){
-    return this.http.post(url, data, { headers: this.headersJson }).map(res => res.json());
+    return this.http.post(url, data, { headers: this.headersJson });
   }
 
   postFile(url, data){

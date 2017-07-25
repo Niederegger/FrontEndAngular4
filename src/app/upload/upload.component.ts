@@ -16,8 +16,10 @@ export class UploadComponent implements OnInit {
     this.sg['state'] = "upload";
   }
 
-  establishment: string;
   userComment: string;
+  dataType: string;
+  dataOrigin: string;
+
   fileUpload;
   reqStat;
   files: FileList;
@@ -48,7 +50,9 @@ export class UploadComponent implements OnInit {
     }
     let file = this.files[0];
     formData.append('file', file);
-    formData.append('establishment', this.establishment);
+    formData.append('isin', this.sg['isin']);
+    formData.append('dataType', this.dataType);
+    formData.append('dataOrigin', this.dataOrigin);
     formData.append('comment', this.userComment);
     console.log(formData);
     if (this.validate()) {
@@ -60,17 +64,24 @@ export class UploadComponent implements OnInit {
         // The 3rd callback handles the "complete" event.
         () => this.completeCallback() //
      );
-    } else {
-      this.reqStat = "something went wrong.";
     }
   }
 
   validate() {
-    return (
-      this.establishment != null && this.establishment.length > 0
-      && this.establishment.length <= 16
-      && this.userComment != null&& this.userComment.length <= 256
-    );
+    if(this.sg['isin']){
+      if(this.dataType != null && this.dataType.length > 0){
+          if(this.dataOrigin != null && this.dataOrigin.length > 0){
+            return true;
+          } else {
+            this.reqStat = 'Keine Quelle angegeben.';
+          }
+      } else {
+        this.reqStat = 'Kein Datentyp angegeben.';
+      }
+    } else {
+      this.reqStat = 'Keine Isin bekannt';
+    }
+    return false;
   }
 
   errorHandling(err) {

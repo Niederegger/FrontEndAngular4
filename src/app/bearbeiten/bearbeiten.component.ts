@@ -43,7 +43,7 @@ export class BearbeitenComponent implements OnInit {
   saveChanges(){
     console.log(this.dataContainer);
     this.dataEdit['data'] = this.dataContainer;
-    this.rps.postRequest('/api/wp/editInfo', this.dataEdit).subscribe(
+    this.rps.postRequest('/api/wp/editInfo', this.dataEdit).map(res => res.json()).subscribe(
       data => console.log(data),
       // The 2nd callback handles errors.
       (err) => this.errorHandling(err),
