@@ -1,0 +1,46 @@
+.selRow{
+  background: #d7d7d7;
+}
+
+td {
+  /*border: 1px solid black;*/
+}
+
+/*table, th, td {
+    border: 1px solid black;
+}
+*/
+/*
+tbody {
+  cursor: pointer;
+}
+
+table {
+  border: 1px solid black;
+  display: block;
+  height: 500px;
+  overflow-y: scroll;
+}*/
+
+/*table tbody, table thead*/
+tbody
+{
+    display: block;
+    /*border:1px solid;*/
+}
+table tbody
+{
+   overflow: auto;
+   height: 247px;
+}
+th, td
+{
+    /*width: 50%;*/
+}
+
+.scrollmol {
+    height: 40%;
+    max-height: 30%;
+    overflow: auto;
+    /*background: ivory;*/
+}

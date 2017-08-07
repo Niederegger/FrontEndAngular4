@@ -22,6 +22,8 @@ export class AnmeldenComponent implements OnInit {
   regex
   validator
   registerData
+  loginData
+  feedBack
 
   ngOnInit(): void {
     this.sg['state'] = 'anmelden';
@@ -31,17 +33,39 @@ export class AnmeldenComponent implements OnInit {
   login() {
     this.validator = "";
     if (this.emailLogin.match(this.regex)) {
-      console.log('email ok');
+      this.loginData = {
+        "email" : this.emailLogin,
+        "password" : this.passwordLogin
+      }
+      this.rps.postRequest('/api/account/login', this.loginData).subscribe(
+        data => this.loginCallback(data),
+        // The 2nd callback handles errors.
+        (err) => this.errorHandling(err),
+        // The 3rd callback handles the "complete" event.
+        () => this.completeCallback() //
+       );
     } else {console.log('email wrong');
       this.validator = "Invalid Email.";
     }
+  }
+
+  loginCallback(data){
+    var obj = JSON.parse(data['_body']);//.toJson();
+    console.log("1" + data);
+    console.log("2" + obj);
+    console.log("3" + obj['message']);
+    console.log("4" + obj.message);
+
+    this.feedBack = obj.message;
+    console.log(data);
+    console.log(this.feedBack);
   }
 
   register() {
     this.validator = "";
     if (this.validateRegister()) {
       this.rps.postRequest('/api/account/register', this.registerData).subscribe(
-        data => console.log(data),
+        data => this.registerCallback(data),
         // The 2nd callback handles errors.
         (err) => this.errorHandling(err),
         // The 3rd callback handles the "complete" event.
@@ -51,6 +75,12 @@ export class AnmeldenComponent implements OnInit {
       console.log('email wrongs');
       this.validator = "Invalid Email.";
     }
+  }
+
+  registerCallback(data){
+    this.feedBack = data['_body'];
+    console.log(data);
+    console.log(this.feedBack);
   }
 
   validateRegister() {

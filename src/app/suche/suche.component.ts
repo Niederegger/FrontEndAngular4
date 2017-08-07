@@ -35,13 +35,11 @@ export class SucheComponent implements OnInit {
     this.val = this.val.trim();
     if (this.val.length == 12 || this.val.length == 6) {
       this.sg["isin"] = this.val;
-      this._router.navigateByUrl('/details/'+this.val);
+      this._router.navigateByUrl('/stammdaten/'+this.val);
    } else {
      this.loader = 'ISIN has to have a length of 12!';
    }
   }
-
-
 
   ngOnInit(): void {
   }

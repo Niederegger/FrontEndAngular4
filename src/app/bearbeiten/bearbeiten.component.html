@@ -1,16 +1,77 @@
-<div class="container">
-  <button (click)="saveChanges()" class="btn btn-default" type="button">speichern</button>
-  <div *ngFor="let key of keyOrder">
-    <div class="row" *ngFor="let inf of dataContainer[key].info; let i = index">
-      <div class="col-lg-3 col-12"><b class="pull-left" align="left" *ngIf="i==0">{{key}}:</b></div>
-      <div class="col-lg-9 pull-right">
-        <span class="pull-left" *ngIf="inf.lvl2!=''">{{inf.lvl2}}:&nbsp;</span>
-        <br *ngIf="inf.lvl2!=''">
-        <span style="float:left;" *ngIf="key=='ISIN'"> {{inf.val}}</span>
-        <input *ngIf="key!='ISIN'" style="width:100%;" type="text"  [(ngModel)]="inf.val"  class="pull-left"/>
-        <!-- value="{{inf.val}}" -->
+<!-- <div class="container"> -->
+  <div class="row">
+    <div class="  col-xs-8 col-lg-8"> <!-- Bearbeiten -->
+      <!-- <hr>
+      <div class="row container">
+        <p>Source: <b>{{sg['currentSource']}}</b></p>
+
+      </div>
+      <hr> -->
+      <br>
+      <div class="">
+        <!-- Detail Ansicht -->
+        <div class="container" *ngIf="!editToggle">
+          <div *ngFor="let key of keyOrder">
+            <div class="row" *ngFor="let inf of dataContainer[key].info; let i = index">
+              <div class="col-lg-4 col-12"><b class="pull-left" align="left" *ngIf="i==0">{{key}}:</b></div>
+              <div class="col-lg-8 pull-right">
+                <span class="pull-left" *ngIf="inf.lvl2!=''">{{inf.lvl2}}:&nbsp;</span>
+                <span class="pull-left" *ngIf="validUrl(inf.val)"><a href='{{inf.val}}'>{{inf.val}}</a></span>
+                <span class="pull-left" *ngIf="!validUrl(inf.val)">{{inf.val}}</span>
+              </div>
+            </div>
+            <br>
+          </div>
+        </div>
+        <!-- /Detail Ansicht -->
+        <!-- Edit Ansicht -->
+        <div *ngIf="editToggle">
+          <div  *ngFor="let key of keyOrder">
+            <div class="row" *ngFor="let inf of dataContainer[key].info; let i = index">
+              <div class="col-lg-4 col-12"><b class="pull-left" align="left" *ngIf="i==0">{{key}}:</b></div>
+              <div class="col-lg-8 pull-right">
+                <span class="pull-left" *ngIf="inf.lvl2!=''">{{inf.lvl2}}:&nbsp;</span>
+                <br *ngIf="inf.lvl2!=''">
+                <span style="float:left;" *ngIf="key=='ISIN'"> {{inf.val}}</span>
+                <input *ngIf="key!='ISIN'" style="width:100%;" type="text"  [(ngModel)]="inf.val"  class="pull-left"/>
+                <!-- value="{{inf.val}}" -->
+              </div>
+            </div>
+            <br>
+          </div>
+        </div>
+        <!-- Edit Ansicht -->
+      </div>
+
+    </div>  <!-- /Bearbeiten -->
+
+    <div class="container col-xs-4 col-lg-4" >  <!-- Sources -->
+      <div class="row container">
+        <p><b>{{sg['currentSource']}}</b></p>
+      </div>
+      <!-- <b style="float:left;">Historie:</b> -->
+      <b style="float:left;">Historie:</b>
+      <table class="table table-fixed table-hover">
+
+        <!-- <thead>
+          <tr>
+            <th><b style="float:left;">Historie:</b></th>
+          </tr>
+        </thead> -->
+        <tbody>
+          <tr style="cursor: pointer;" (click)="switchSource(ds)" *ngFor="let ds of dataSource" class="{{isSel(ds)}}">
+            <td>{{ds.source}}</td>
+            <td style="width:100%;">{{cutTimestamp(ds.timestamp)}}</td>
+          </tr>
+        </tbody>
+      </table>  <!-- /Sources -->
+      <hr>
+      <button style="float:center;" style="width:57%;" (click)="toggleEdit()" type="button">{{btAnpassenText}}</button><br>
+      <hr>
+      <div *ngIf="editToggle">
+        <button style="float:center;" style="width:57%;" (click)="saveChanges()" type="button">Speichern</button><br>
+        <hr>
       </div>
     </div>
-    <br>
   </div>
-</div>
+<!-- </div> -->

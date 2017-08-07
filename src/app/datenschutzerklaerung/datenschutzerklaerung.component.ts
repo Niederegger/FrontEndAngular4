@@ -11,7 +11,7 @@ export class DatenschutzerklaerungComponent implements OnInit {
   constructor(private sg: SimpleGlobal) { }
 
   ngOnInit(): void {
-    this.sg['state'] = 'datenschutzerklaerung';
+    this.sg['state'] = 'start';
   }
 
 }

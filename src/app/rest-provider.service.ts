@@ -19,6 +19,11 @@ export class RestProviderService {
     return this.http.get(url, { headers: this.headersJson }).map(res => res.json());
   }
 
+  getRequestWM(url){
+    return this.http.get(url, { headers: this.headersJson });
+  }
+
+  
   postRequest(url, data){
     return this.http.post(url, data, { headers: this.headersJson });
   }

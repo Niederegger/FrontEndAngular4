@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestProviderService } from "../rest-provider.service";
 import {SimpleGlobal} from 'ng2-simple-global';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
@@ -10,7 +11,18 @@ import {SimpleGlobal} from 'ng2-simple-global';
 })
 export class UploadComponent implements OnInit {
 
-  constructor(private rps: RestProviderService, public sg: SimpleGlobal) { }
+  constructor(private _router: Router,private rps: RestProviderService, public sg: SimpleGlobal) {
+  this._router.events.subscribe(path  => { this.search(path['url']) });
+ }
+
+ search(searchRequest){
+   if(!this.sg['isin'] || this.sg['prevIsin']){
+     this.sg['prevIsin'] = this.sg['isin'];
+     // hackerish but works
+     let str : string = (searchRequest+"");
+     this.sg['isin'] = str.split("/", 3)[2];
+   }
+ }
 
   ngOnInit() {
     this.sg['state'] = "upload";

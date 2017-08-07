@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SimpleGlobal} from 'ng2-simple-global';
 
 @Component({
   selector: 'app-impressum',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImpressumComponent implements OnInit {
 
-  constructor() { }
+  constructor(public sg: SimpleGlobal) { }
 
   ngOnInit() {
+    this.sg['state'] = "start";
   }
 
 }

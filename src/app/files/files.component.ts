@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestProviderService } from "../rest-provider.service";
 import { SimpleGlobal } from 'ng2-simple-global';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-files',
@@ -21,7 +22,28 @@ export class FilesComponent implements OnInit {
     files: FileList;
     filestring: string;
 
-  constructor(private rps: RestProviderService, public sg: SimpleGlobal) { }
+  constructor(private _router: Router,private rps: RestProviderService, public sg: SimpleGlobal) {
+    this._router.events.subscribe(path  => { this.listenUrl(path['url']) }); // eventlistener on url change
+  }
+
+  urlListened
+  listenUrl(asd){
+    if(!this.urlListened){
+      this.search(asd)
+    }
+    this.urlListened = true;
+  }
+
+
+ search(searchRequest){
+   if(!this.sg['isin'] || this.sg['prevIsin']){
+     this.sg['prevIsin'] = this.sg['isin'];
+     // hackerish but works
+     let str : string = (searchRequest+"");
+     this.sg['isin'] = str.split("/", 3)[2];
+     this.fetchFiles();
+   }
+ }
 
   ngOnInit() {
     this.sg['state'] = "files";

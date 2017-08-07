@@ -14,52 +14,51 @@ import { Observable } from 'rxjs/Observable';
 export class DetailsComponent implements OnInit {
 
   fetchedData;    // return value of rest request
-  isin;           // current showing isin values
   error;          // errorMessage
   valid;          // flag whether isin is valid or not
   keyOrder;       // keyOrder of fetchedData
   dataContainer;  // data of fetchedData
   clientIP;
-  prevIsin;
 
   ngOnInit(): void {
     this.sg['state'] = "details";
   }
 
-  search(searchRequest){
-    this.prevIsin = this.isin;
-    // hackerish but works
-    let str : string = (searchRequest+"");
-    this.isin = str.split("/", 3)[2];
-    console.log(this.isin);
+  search(searchRequest) {
+    if (!this.sg['isin'] || this.sg['prevIsin']) {
+      this.sg['prevIsin'] = this.sg['isin'];
+      // hackerish but works
+      let str: string = (searchRequest + "");
+      this.sg['isin'] = str.split("/", 3)[2];
+    }
     // eventListener on Url gets triggered 3 times
     // with this lookup the 2 redundant times are filterted out
-    if(this.prevIsin != this.isin)
-    if (this.isin.length == 12 || this.isin.length == 6) {
-      this.rps.getRequest('/api/wp/info?v=' + this.isin).subscribe(
-        data => this.fetchedData = data,
-        // The 2nd callback handles errors.
-        (err) => this.errorHandling(err),
-        // The 3rd callback handles the "complete" event.
-        () => this.completeCallback() //
-     );
-   } else {
-     this.valid = false;
-     this.error = 'ISIN supposed to have a length of 12! Your Input was: "'+this.isin+'".';
-     console.log('Incorrect Isin length!');
-   }
+    if (this.sg['prevIsin'] != this.sg['isin'])
+      if (this.sg['isin'].length == 12 || this.sg['isin'].length == 6) {
+        this.rps.getRequest('/api/wp/info?v=' + this.sg['isin']).subscribe(
+          data => this.fetchedData = data,
+          // The 2nd callback handles errors.
+          (err) => this.errorHandling(err),
+          // The 3rd callback handles the "complete" event.
+          () => this.completeCallback() //
+        );
+      } else {
+        this.valid = false;
+        this.error = 'ISIN supposed to have a length of 12! Your Input was: "' + this.sg['isin'] + '".';
+        console.log('Incorrect Isin length!');
+      }
   }
 
-  errorHandling(err){
-    console.error("Error: "+err);
+  errorHandling(err) {
+    console.error("Error: " + err);
     this.valid = false;
-    this.error = "Couldn't fetch Information for this ISIN: " + this.isin + "!";
+    this.error = "Couldn't fetch Information for this ISIN: " + this.sg['isin'] + "!";
   }
 
-  completeCallback(){ // validates whether data could be fetched or not
+  completeCallback() { // validates whether data could be fetched or not
     if (this.fetchedData['keyOrder'] == null) {
       this.valid = false;
-      this.error = "Couldn't fetch Information for this ISIN: " + this.isin + "!";
+      this.error = "Couldn't fetch Information for this ISIN: " + this.sg['isin'] + "!";
     } else {
       this.valid = true;
       this.keyOrder = this.fetchedData['keyOrder'];
@@ -77,13 +76,17 @@ export class DetailsComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute,private rps: RestProviderService, private router: Router,public sg: SimpleGlobal) {
-    // if(this.sg['isin']){
-    //   console.log(this.sg['isin']);
-    //   this.search(this.sg['isin']);
-    // } else {
-      this.router.events.subscribe(path  => { this.search(path['url']) }); // eventlistener on url change
-    // }
- }
+  constructor(private route: ActivatedRoute, private rps: RestProviderService, private router: Router, public sg: SimpleGlobal) {
+    this.router.events.subscribe(path => { this.listenUrl(path['url']) }); // eventlistener on url change
+  }
+
+  urlListened
+
+  listenUrl(asd) {
+    if (!this.urlListened) {
+      this.search(asd)
+    }
+    this.urlListened = true;
+  }
 
 }

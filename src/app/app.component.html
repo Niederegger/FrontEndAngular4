@@ -1,42 +1,18 @@
-<!-- <div class="container">
-  <h1>Debug Global Scope</h1>
-
-  isin.{{sg['isin']}}.
-  <br>
-  state.{{sg['state']}}.
-  <br>
-  error.{{sg['error']}}.
-  <br>
-  fetchedData.{{sg['fetchedData'] | json }}.
-  <br>
-
-</div> -->
-
 
 <div class="container">
-      <div class="container">
-        <div class="starter-template">
-          <h1>WpWiki <font size="4">(Demo)
-          <br>
-        offenes Publikations- und Stammdatenportal für Wertpapierinformationen</font></h1>
-          <!-- <h1><font size="4">offenes Publikations- und Stammdatenportal für Wertpapierinformationen</font></h1><br> -->
+  <a style="float:right;" class="nav-link" routerLink="/anmelden">Anmelden</a>
+  <div class="starter-template">
+    <h1>WpWiki <font size="4">(Demo)
+    <br>
+  offenes Publikations- und Stammdatenportal für Wertpapierinformationen</font></h1>
+    <!-- <h1><font size="4">offenes Publikations- und Stammdatenportal für Wertpapierinformationen</font></h1><br> -->
 <br>
-          <app-nav></app-nav>
-          <app-suche  *ngIf="sg['state']=='start'"></app-suche>
-          <router-outlet></router-outlet>
+    <app-nav></app-nav>
+    <app-suche  *ngIf="sg['state']=='start'"></app-suche>
+    <router-outlet></router-outlet>
 
-          <!--
-      <h1>WP Wiki</h1>
-      <hr><h3>Suche</h3><hr>
-      <app-suche></app-suche>
-      <hr><h3>Anmelden</h3><hr>
-      <app-anmelden></app-anmelden>
-      <hr><h3>Lesen</h3><hr>
-      <app-lesen></app-lesen>
-      <hr><h3>Quellen</h3><hr>
-      <app-quellen></app-quellen>
-      -->
-        </div>
-      </div>
+  </div>
 </div>
+<br>
+<br>
 <app-footer></app-footer>

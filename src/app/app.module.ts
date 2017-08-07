@@ -23,6 +23,8 @@ import { UeberWpWikiComponent } from './ueber-wp-wiki/ueber-wp-wiki.component';
 import { NutzungsbedingungenComponent } from './nutzungsbedingungen/nutzungsbedingungen.component';
 import { UploadComponent } from './upload/upload.component';
 import { FilesComponent } from './files/files.component';
+import { StammdatenComponent } from './stammdaten/stammdaten.component';
+import { QuellenDetailsComponent } from './quellen-details/quellen-details.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { FilesComponent } from './files/files.component';
     NutzungsbedingungenComponent,
     UploadComponent,
     FilesComponent,
+    StammdatenComponent,
+    QuellenDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,14 +55,15 @@ import { FilesComponent } from './files/files.component';
     RouterModule.forRoot([
       { path: 'anmelden', component: AnmeldenComponent },
       { path: '', component: DefaultComponent },
-      { path: 'details/:v', component: DetailsComponent },
-      // { path: 'quellen/:v', component: QuellenComponent },
+      // { path: 'details/:v', component: DetailsComponent },
+      // { path: 'stammdaten/:v', component: StammdatenComponent },
+      { path: 'stammdaten/:v', component: QuellenComponent },
+      { path: 'stammdaten/:v/quellen/:w', component: QuellenDetailsComponent },
       // { path: 'einstellungen', component: EinstellungComponent },
       { path: 'datenschutzerklaerung', component: DatenschutzerklaerungComponent },
       // { path: 'versionsgeschichte', component: VersionsgeschichteComponent },
-      { path: 'bearbeiten/:v', component: BearbeitenComponent },
+      // { path: 'bearbeiten/:v', component: BearbeitenComponent },
       { path: 'impressum', component: ImpressumComponent },
-      { path: 'datenschutzerklaerung', component: DatenschutzerklaerungComponent },
       { path: 'ueber', component: UeberWpWikiComponent },
       // { path: 'nutzungsbedingungen', component: NutzungsbedingungenComponent },
       // { path: 'einstellungen', component: EinstellungComponent },

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SimpleGlobal} from 'ng2-simple-global';
 
 @Component({
   selector: 'app-ueber-wp-wiki',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UeberWpWikiComponent implements OnInit {
 
-  constructor() { }
+  constructor(public sg: SimpleGlobal) { }
 
   ngOnInit() {
+    this.sg['state'] = "start";
   }
 
 }
