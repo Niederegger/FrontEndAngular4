@@ -8,9 +8,10 @@
         <th width="1%"></th><!-- hacks !!! -->
         <th width="17%">Feld</th>
         <th width="34%">aktueller Inhalt</th>
-        <th width="39%" *ngIf="!toggelEditMode('')">Quelleangabe</th>
         <th width="1%"></th><!-- hacks !!! -->
-        <th width="8%" *ngIf="!toggelEditMode('')">Quellen</th>
+        <th width="8%" *ngIf="!toggelEditMode('')"></th>
+        <!-- Quellen -->
+        <th width="39%" *ngIf="!toggelEditMode('')">Quelleangabe</th>
       </tr>
     </thead>
     <tbody *ngFor="let key of keyOrder">
@@ -42,6 +43,19 @@
               <span class="left top" *ngIf="!validUrl(item.val)">{{item.val}}</span> -->
           </td>
 
+          <td></td>
+          <!-- Quellen  -->
+          <td class="top" *ngIf="!toggelEditMode('')">
+            <!-- <select (change)="selectChangeHandler($event)" style="width:100%">
+              <ng-container *ngFor="let qref of item.quellen">
+                <option value="{{item.sqn}}_{{qref.integer}}" *ngIf="isSelected(item.srcn, qref.integer)" selected>{{qref.string}}</option>
+                <option value="{{item.sqn}}_{{qref.integer}}" *ngIf="!isSelected(item.srcn, qref.integer)">{{qref.string}}</option>
+              </ng-container>
+            </select> -->
+              <!-- <option *ngFor="let qref of item.quellen" {{isSelected(item.srcn, qref.integer)}}>{{qref.string}} - {{qref.integer}}</option> -->
+            <a (click)="setSQN(item.sqn)" href="/stammdaten/{{sg['isin']}}/quellen/{{item.sqn}}">Quellen</a>
+          </td>
+
           <!-- Quelleangabe  -->
           <td *ngIf="!toggelEditMode('')">
             <div class="left" *ngIf="validUrl(item.url)">
@@ -50,19 +64,6 @@
             </div>
             <p class="left" *ngIf="!validUrl(item.url)">{{item.url}} - {{item.src}} (Stand vom: {{cutTimestamp(item.ts)}})</p>
           </td>
-          <td></td>
-          
-          <!-- Quellen  -->
-          <td class="top" *ngIf="!toggelEditMode('')">
-            <select (change)="selectChangeHandler($event)" style="width:100%">
-              <ng-container *ngFor="let qref of item.quellen">
-                <option value="{{item.sqn}}_{{qref.integer}}" *ngIf="isSelected(item.srcn, qref.integer)" selected>{{qref.string}}</option>
-                <option value="{{item.sqn}}_{{qref.integer}}" *ngIf="!isSelected(item.srcn, qref.integer)">{{qref.string}}</option>
-              </ng-container>
-              <!-- <option *ngFor="let qref of item.quellen" {{isSelected(item.srcn, qref.integer)}}>{{qref.string}} - {{qref.integer}}</option> -->
-            </select>
-            <a (click)="setSQN(item.sqn)" href="/stammdaten/{{sg['isin']}}/quellen/{{item.sqn}}">Ansehen...</a
-            ></td>
         </tr>
       </ng-container>
     </tbody>

@@ -25,6 +25,7 @@ import { UploadComponent } from './upload/upload.component';
 import { FilesComponent } from './files/files.component';
 import { StammdatenComponent } from './stammdaten/stammdaten.component';
 import { QuellenDetailsComponent } from './quellen-details/quellen-details.component';
+import { Quellen2Component } from './quellen2/quellen2.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { QuellenDetailsComponent } from './quellen-details/quellen-details.compo
     FilesComponent,
     StammdatenComponent,
     QuellenDetailsComponent,
+    Quellen2Component,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,7 @@ import { QuellenDetailsComponent } from './quellen-details/quellen-details.compo
       { path: '', component: DefaultComponent },
       // { path: 'details/:v', component: DetailsComponent },
       // { path: 'stammdaten/:v', component: StammdatenComponent },
-      { path: 'stammdaten/:v', component: QuellenComponent },
+      { path: 'stammdaten/:v', component: Quellen2Component },
       { path: 'stammdaten/:v/quellen/:w', component: QuellenDetailsComponent },
       // { path: 'einstellungen', component: EinstellungComponent },
       { path: 'datenschutzerklaerung', component: DatenschutzerklaerungComponent },
