@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NutzungsbedingungenComponent } from './nutzungsbedingungen.component';
+import { RegisterComponent } from './register.component';
 
-describe('NutzungsbedingungenComponent', () => {
-  let component: NutzungsbedingungenComponent;
-  let fixture: ComponentFixture<NutzungsbedingungenComponent>;
+describe('RegisterComponent', () => {
+  let component: RegisterComponent;
+  let fixture: ComponentFixture<RegisterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NutzungsbedingungenComponent ]
+      declarations: [ RegisterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NutzungsbedingungenComponent);
+    fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

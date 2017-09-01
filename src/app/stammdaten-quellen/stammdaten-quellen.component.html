@@ -20,20 +20,31 @@
     <tbody *ngFor="let item of fetchedData">
       <tr>
         <td></td>
+        <!-- Wert -->
         <td class="top">
           <!-- <p  class="left top">{{item.stringValue}}</p> -->
-          <div class="left top" *ngIf="validUrl(item.stringValue)"><a target="_blank" href='{{item.stringValue}}'>{{item.stringValue}}</a></div>
-          <div class="left top" *ngIf="!validUrl(item.stringValue)"><p  class="left top">{{item.stringValue}}</p></div>
+          <div class="left top" *ngIf="gfs.validUrl(item.stringValue)"><a target="_blank" href='{{item.stringValue}}'>{{item.stringValue}}</a></div>
+          <div class="left top" *ngIf="!gfs.validUrl(item.stringValue)">
+            <p class="left top">{{item.stringValue}}</p>
+          </div>
         </td>
         <td></td>
-        <td><span class="left">{{cutTimestamp(item.timestamp)}}</span></td>
-        <td></td>
+        <!-- Stand -->
         <td>
-          <div class="left" *ngIf="validUrl(item.urlsource)">
-            <a class="left" target="_blank" href='{{item.urlsource}}'>{{item.urlsource}}</a><br>
-            <span class="left">{{item.data_origin}}</span>
-          </div>
-          <p class="left" *ngIf="!validUrl(item.urlsource)">{{item.urlsource}} - {{item.data_origin}}</p>
+          <font size="2">
+            <span class="left">{{gfs.cutTimestampFull(item.timestamp)}}</span>
+          </font>
+        </td>
+        <td></td>
+        <!-- Quelle -->
+        <td>
+          <font size="2">
+            <div class="left" *ngIf="gfs.validUrl(item.urlsource)">
+              <a class="left" target="_blank" href='{{item.urlsource}}'>{{item.urlsource}}</a><br>
+              <span class="left">{{item.data_origin}}</span>
+            </div>
+            <p class="left" *ngIf="!gfs.validUrl(item.urlsource)">{{item.urlsource}} - {{item.data_origin}}</p>
+          </font>
         </td>
       </tr>
     </tbody>

@@ -1,0 +1,27 @@
+<!--Anmeldung-->
+<div>
+  <!--Titel-->
+  <h2>Anmeldung</h2>
+  <div class="form-content">
+    <!--FeedBack-->
+    <p style="color: blue;">{{loginSuccessMsg}}</p>
+    <p style="color: red;">{{loginErrorMsg}}</p>
+    <!--/FeedBack-->
+    <!--E-Mail Adresse-->
+    <div class="form-group row" align="center">
+      <label style="float:left;" class="col-sm-12 col-md-4" for="lun">E-Mail Adresse: </label>
+      <input [(ngModel)]="loginEmail" class="col-sm-12 col-md-6" type="text" id="lun">
+    </div>
+    <!--/E-Mail Adresse-->
+    <!--Passwort-->
+    <div class="form-group row" align="center">
+      <label style="float:left;" class="col-sm-12 col-md-4" for="lpw">Passwort: </label>
+      <input [(ngModel)]="loginPassword" class="col-sm-12 col-md-6" type="password" id="lpw">
+    </div>
+    <!--/Passwort-->
+    <!--AnmeldeButton-->
+    <button (click)="login()" class="btn btn-default" type="button">Anmelden</button>
+    <!--/AnmeldeButton-->
+  </div>
+</div>
+<!--/Anmeldung-->

@@ -1,13 +1,112 @@
-<div class="container" *ngIf="valid">
-  <div *ngFor="let key of keyOrder">
-    <div class="row" *ngFor="let inf of dataContainer[key].info; let i = index">
-      <div class="col-lg-3 col-12"><b class="pull-left" align="left" *ngIf="i==0">{{key}}:</b></div>
-      <div class="col-lg-9 pull-right">
-        <span class="pull-left" *ngIf="inf.lvl2!=''">{{inf.lvl2}}:&nbsp;</span>
-        <span class="pull-left" *ngIf="validUrl(inf.val)"><a target="_blank" href='{{inf.val}}'>{{inf.val}}</a></span>
-        <span class="pull-left" *ngIf="!validUrl(inf.val)">{{inf.val}}</span>
-      </div>
-    </div>
-    <br>
-  </div>
+<br>
+<p class="left"><b>ISIN: {{sg['isin']}}</b></p>
+<br>
+<p *ngIf="!valid" style="color:red;">{{error}}</p>
+<div style="margin-bottom: 61px;" class="container left" *ngIf="valid">
+  <button (click)="toogleEdit(!editToggle)" class='left' type="button">{{btAnpassenText}}</button> <button *ngIf="editToggle"
+    (click)="saveEdit()" class='left' type="button">Speichern</button><br>
+  <hr>
+
+  <!-- view -->
+  <table *ngIf="stammdaten && !editToggle">
+
+    <thead class="underliner">
+      <tr>
+        <th width="1%"></th>
+        <th width="17%">Feld</th>
+        <th width="38%">aktueller Inhalt</th>
+        <th width="1%"></th>
+        <th width="36%">Quellenangabe</th>
+        <th width="1%"></th>
+        <th width="5%">weitere</th>
+        <th width="1%"></th>
+      </tr>
+    </thead>
+
+    <ng-container *ngFor="let key of stammdaten.keyOrder">
+      <tbody *ngIf="showVal(key)">
+        <ng-container *ngFor="let item of stammdaten.container[key]; let i = index">
+          <ng-container *ngFor="let entries of item.quellen; let j = index">
+            <tr>
+              <!-- Fieldname -->
+              <td></td>
+              <td class="left top" *ngIf="j==0&&i==0" class="left"><b>{{key}}</b></td>
+              <td class="noBorder" *ngIf="!(j==0&&i==0)"></td>
+              <!-- /Fieldname -->
+              <!-- Inhalt -->
+              <td>
+                <table width="100%" style="vertical-align: top;">
+                  <thead *ngIf="item.level2!=null">
+                    <tr>
+                      <th class="noBorder" colspan="2">{{item.level2}}:</th>
+                    </tr>
+                  </thead>
+                  <tbody style="vertical-align: top; align-items : top;">
+                    <tr style="vertical-align: top;" *ngFor="let vals of entries.values; let k = index">
+
+                      <td *ngIf="gfs.validUrl(vals.str1)" class="top" align="left"><span style="vertical-align:super"><a target="_blank" href='{{vals.str1}}'>{{vals.str1}}</a></span></td>
+                      <td *ngIf="!gfs.validUrl(vals.str1)" class="top" align="left"><span style="vertical-align:super">{{vals.str1}}</span></td>
+
+                      <td class="top" align="right"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+              <!-- /Inhalt -->
+              <td></td>
+              <!-- QuellenAngabe -->
+              <td class="top">
+                <font size="2">
+                  <div class="left" *ngIf="gfs.validUrl(entries.source)">
+                    <span>{{entries.origin}}</span><br>
+                    <a target="_blank" href='{{entries.source}}'>{{gfs.adjustUrl(entries.source, 48)}}</a><br>
+                  </div>
+                  <p class="left" *ngIf="!gfs.validUrl(entries.source)">{{entries.source}} - {{entries.origin}}</p>
+                </font>
+              </td>
+              <td></td>
+              <td><a *ngIf="j==0&&i==0 || item.level2!=null" href="/stammdaten/{{sg['isin']}}/quellen/{{item.sequNum}}">-></a></td>
+              <td></td>
+              <!-- /QuellenAngabe -->
+
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </ng-container>
+  </table>
+  <!-- /view -->
+  <!-- Edit -->
+  <ng-container *ngIf="toggelEditMode('') && fReady">
+    <ng-container *ngFor="let key of fields.keyOrder">
+
+      <ng-container *ngIf="fields.container[key].length==1">
+        <div class="form-group row">
+          <label class="col-lg-3 col-12 col-form-label left"><b>{{key}}:</b></label>
+          <div class="col-lg-5 col-12">
+            <input *ngIf='key!="ISIN"' class="form-control" type="text" [(ngModel)]="fields.container[key][0].str2">
+            <span *ngIf='key=="ISIN"'>{{sg['isin']}}</span>
+          </div>
+          <hr>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="fields.container[key].length!=1">
+        <br>
+        <br>
+        <div class="form-group row">
+          <p class="left"><b>{{key}}:</b></p>
+        </div>
+        <ng-container *ngFor="let item of fields.container[key]">
+          <div class="form-group row">
+            <label class="col-lg-3 col-12 col-form-label left"><b>{{item.str1}}:</b></label>
+            <div class="col-lg-5 col-12">
+              <input class="form-control" type="text" [(ngModel)]="item.str2">
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  <!-- /Edit -->
 </div>

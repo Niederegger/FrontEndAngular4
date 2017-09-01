@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StammdatenComponent } from './stammdaten.component';
 
-describe('StammdatenComponent', () => {
+describe('Quellen2Component', () => {
   let component: StammdatenComponent;
   let fixture: ComponentFixture<StammdatenComponent>;
 

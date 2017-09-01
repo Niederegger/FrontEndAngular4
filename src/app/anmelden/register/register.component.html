@@ -1,0 +1,39 @@
+<!--Registrierung-->
+<div>
+  <!--Titel-->
+  <h2>Neu hier?
+    <br/>Kostenlos registrieren:</h2>
+  <div class="form-content">
+    <!--FeedBack-->
+    <p style="color: blue;">{{registerSuccessMsg}}</p>
+    <p style="color: red;">{{registerErrorMsg}}</p>
+    <!--/FeedBack-->
+    <!--Benutzername-->
+    <div class="form-group row" align="center">
+      <label style="float:left;" class="col-sm-12 col-md-4" for="run">Benutzername: </label>
+      <input [(ngModel)]="registerUsername" class="col-sm-12 col-md-6" type="text" id="run">
+    </div>
+    <!--/Benutzername-->
+    <!--FeedE-Mail AdresseBack-->
+    <div class="form-group row" align="center">
+      <label style="float:left;" class="col-sm-12 col-md-4" for="rem">E-Mail Adresse:</label>
+      <input [(ngModel)]="registerEmail" class="col-sm-12 col-md-6" type="email" id="rem"> </div>
+    <!--/E-Mail Adresse-->
+    <!--gewünschtes Passwort-->
+    <div class="form-group row" align="center">
+      <label style="float:left;" class="col-sm-12 col-md-4" for="rgp">gewünschtes Passwort:</label>
+      <input [(ngModel)]="registerPassword" class="col-sm-12 col-md-6" type="password" id="rgp">
+    </div>
+    <!--/gewünschtes Passwort-->
+    <!--Passwort wiederholen-->
+    <div class="form-group row" align="center">
+      <label style="float:left;" class="col-sm-12 col-md-4" for="rpw">Passwort wiederholen:</label>
+      <input [(ngModel)]="registerPasswordRep" class="col-sm-12 col-md-6" type="password" id="rpw">
+    </div>
+    <!--/Passwort wiederholen-->
+    <!--RegistrierenButton-->
+    <button (click)="register()" class="btn btn-default" type="button">Registrieren</button>
+    <!--/RegistrierenButton-->
+  </div>
+</div>
+<!--/Registrierung-->

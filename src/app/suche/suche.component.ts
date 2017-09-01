@@ -37,9 +37,9 @@ export class SucheComponent implements OnInit {
     console.log(this.sg["isin"]);
     if (this.sg["isin"].length == 12 || this.sg["isin"].length == 6) {
       // this.sg["isin"] = this.val;
-      this._router.navigateByUrl('/stammdaten/'+this.sg["isin"]);
+      this._router.navigateByUrl('/stammdaten/' + this.sg["isin"]);
    } else {
-     this.loader = 'ISIN has to have a length of 12!';
+     this.loader = 'Die Suche ist weder eine ISIN noch eine WKN';
    }
   }
 

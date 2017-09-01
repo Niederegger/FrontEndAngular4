@@ -1,0 +1,107 @@
+<div>
+  <!--ISIN ANZEIGE-->
+  <p align="left"><b>ISIN: {{sg['isin']}}</b></p>
+  <!-- <br> -->
+  <!--/ISIN ANZEIGE-->
+
+  <!--Tabelle an Publikationen-->
+  <div class="container" class="table">
+    <table *ngIf="fileData">
+      <thead>
+        <tr>
+          <th width="30%" class="text-left">Datei</th>
+          <th width="5%" class="text-left">Typ</th>
+          <th width="10%" class="text-left">Dateigröße</th>
+          <th width="8%" class="text-left">Stand</th>
+          <th width="37%" class="text-left">Quelle</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <!--Externe Publikationen-->
+      <p *ngIf="fileData.extern.length > 0 " class="text-left"><b>Externe Publikationen:</b></p>
+      <tbody class="table-hover">
+        <tr *ngFor="let fde of fileData.extern">
+          <td class="text-left"><a target="_blank" href="{{fde.url}}">{{ fde.fileName }}</a></td>
+          <td class="text-left">
+            <font size="2">
+              {{ fde.dataType }}
+            </font>
+          </td>
+          <td class="text-left">
+            <font size="2">
+              {{ fde.comment }}
+            </font>
+          </td>
+          <td class="text-left">
+            <font size="2">
+              {{ gfs.cutTimestamp(fde.timeStamp) }}
+            </font>
+          </td>
+          <td class="text-left" colspan="2">
+            <font size="2">
+              <span>{{fde.dataOrigin}}</span><br>
+              <a target="_blank" href='{{fde.source}}'>{{gfs.adjustUrl(fde.source, 60)}}</a><br>
+            </font>
+          </td>
+        </tr>
+      </tbody>
+      <!--Interne Publikationen-->
+      <p *ngIf="fileData.intern.length > 0" class="text-left"><b>Interne Publikationen:</b></p>
+      <tbody class="table-hover">
+        <tr *ngFor="let fd of fileData.intern">
+          <td class="text-left">
+            <a href="/api/file/download?fn={{fd.fileName}}&ts={{gfs.prepareTs(fd.timeStamp)}}">{{ fd.fileName }}</a>
+          </td>
+          <td class="text-left">
+            <font size="2">
+              {{ fd.dataType }}
+            </font>
+          </td>
+          <td class="text-left">
+            <font size="2">
+              {{ fd.comment }}
+            </font>
+          </td>
+          <td class="text-left">
+            <font size="2">
+              {{ gfs.cutTimestamp(fd.timeStamp) }}
+            </font>
+          </td>
+          <td class="text-left">
+            <font size="2">
+              {{ fd.source }} - {{ fd.url }}
+            </font>
+          </td>
+          <td>
+            <button (click)="removeFile(fd.fileName, gfs.prepareTs(fd.timeStamp))" class="btn btn-default" type="button">löschen</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <hr>
+  </div>
+  <!--/Tabelle an Publikationen-->
+
+  <!--Publikation einreichen-->
+  <div>
+    <span class="pull-left"><b>Dokument einreichen:</b></span>
+    <br>
+    <br>
+    <!--UserFeedback-->
+    <p align="left" style="color: red;">{{einreichenErrorMsg}}</p>
+    <div class="row">
+      <!-- Quelle -->
+      <div class="col-lg-3 col-12"><span class="pull-left" align="left"><b>Bezeichnung:</b> *</span></div>
+      <div class="col-lg-9 pull-right">
+        <input placeholder="zB: Factsheet" style="width:66%;" type="text" [(ngModel)]="fileBezeichnung" class="pull-left" />
+      </div>
+    </div>
+    <br>
+    <input #fileInput [(ngModel)]="fileUpload" (change)="getFiles($event)" type="file" accept=".pdf, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+    <button (click)="upload()" class="btn btn-default" type="button">Upload</button>
+
+    <br>
+  </div>
+
+</div>

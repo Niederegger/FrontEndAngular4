@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EinstellungComponent } from './einstellung.component';
+import { StammdatenQuellenComponent } from './stammdaten-quellen.component';
 
-describe('EinstellungComponent', () => {
-  let component: EinstellungComponent;
-  let fixture: ComponentFixture<EinstellungComponent>;
+describe('QuellenDetailsComponent', () => {
+  let component: StammdatenQuellenComponent;
+  let fixture: ComponentFixture<StammdatenQuellenComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EinstellungComponent ]
+      declarations: [ StammdatenQuellenComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EinstellungComponent);
+    fixture = TestBed.createComponent(StammdatenQuellenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
