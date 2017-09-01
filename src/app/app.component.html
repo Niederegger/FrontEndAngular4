@@ -1,14 +1,30 @@
-
 <div class="container">
-  <a style="float:right;" class="nav-link" routerLink="/anmelden">Anmelden</a>
+
+  <!-- <a *ngIf="sg['user']" style="float:right;" class="nav-link" >Eingeloggt als: {{sg['user']['username']}}</a> -->
+
+  <div style="float:right;" *ngIf="sg['user']">
+    <span>
+      <span>{{sg['user']['username']}}</span> | <span  (click)="logout()" class="llink">Ausloggen</span>
+    </span>
+  </div>
+
+  <!-- <div style="float:right;" *ngIf="sg['user']" class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User: {{sg['user']['username']}}<span ></span></button>
+    <ul class="dropdown-menu">
+      <li><a (click)="logout()">logout</a></li>
+    </ul>
+  </div> -->
+
+  <a *ngIf="!sg['user']" style="float:right;color:white;" class="nav-link" routerLink="/anmelden">Anmelden</a>
   <div class="starter-template">
-    <h1>WpWiki <font size="4">(Demo)
-    <br>
-  offenes Publikations- und Stammdatenportal für Wertpapierinformationen</font></h1>
+    <h1>WpWiki
+      <font size="4">(Beta)
+        <br> offenes Publikations- und Stammdatenportal für Wertpapierinformationen</font>
+    </h1>
     <!-- <h1><font size="4">offenes Publikations- und Stammdatenportal für Wertpapierinformationen</font></h1><br> -->
-<br>
+    <br>
     <app-nav></app-nav>
-     <app-suche  *ngIf="sg['state']=='start'"></app-suche> 
+    <app-suche *ngIf="sg['state']=='start'"></app-suche>
     <router-outlet></router-outlet>
 
   </div>

@@ -187,6 +187,8 @@ export class Quellen2Component implements OnInit {
 
   saveEdit(){
     this.fields.container['ISIN'][0].str2 = this.sg['isin'];
+    this.fields.user = this.sg['user'];
+    
     console.log(this.fields);
     this.rps.postRequest('/api/wp/pushData', this.fields).subscribe(
       data => this.saveChangesCallBack(data),

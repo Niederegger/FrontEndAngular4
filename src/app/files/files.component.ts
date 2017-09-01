@@ -148,7 +148,12 @@ export class FilesComponent implements OnInit {
     formData.append('file', file);
     formData.append('isin', this.sg['isin']);
     formData.append('dataOrigin', this.dataOrigin);
+    formData.append('user', JSON.stringify(this.sg['user']));
+
     console.log(this.dataOrigin);
+    console.log(formData);
+    console.log(this.sg['user']);
+    
     if (this.validate()) {
       this.rps.postFile("/api/file/uploadFile", formData, )
         .subscribe(

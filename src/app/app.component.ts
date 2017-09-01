@@ -12,5 +12,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.sg['state'] = 'start';
+    const storedUser = localStorage.getItem('user');
+    this.sg['user'] = storedUser != null ? JSON.parse(storedUser) : null;
+  }
+
+  logout(){
+    this.sg['user'] = null;
+    localStorage.setItem('user', null);
   }
 }

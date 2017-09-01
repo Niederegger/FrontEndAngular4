@@ -20,101 +20,125 @@ export class AnmeldenComponent implements OnInit {
   passwordRegister
   passwordRegisterRep
   regex
-  validator
   registerData
   loginData
-  feedBack
+  feedBackR
+  validatorR
+  feedBackL
+  validatorL
 
   ngOnInit(): void {
     this.sg['state'] = 'anmelden';
     this.regex = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
   }
 
+
+  resetFeedback() {
+    this.validatorL = "";
+    this.validatorR = "";
+    this.feedBackL = "";
+    this.feedBackR = "";
+
+  }
+
   login() {
-    this.validator = "";
+    this.resetFeedback();
     if (this.emailLogin.match(this.regex)) {
       this.loginData = {
-        "email" : this.emailLogin,
-        "password" : this.passwordLogin
-      }
-      this.rps.postRequest('/api/account/login', this.loginData).subscribe(
+        "username": "loggingin",
+        "email": this.emailLogin,
+        "password": this.passwordLogin
+      };
+      this.rps.postRequest('/api/user/login', this.loginData).map(res => res.json()).subscribe(
         data => this.loginCallback(data),
         // The 2nd callback handles errors.
-        (err) => this.errorHandling(err),
+        (err) => this.errorHandling(err, 'l'),
         // The 3rd callback handles the "complete" event.
         () => this.completeCallback() //
-       );
-    } else {console.log('email wrong');
-      this.validator = "Invalid Email.";
+      );
+    } else {
+      console.log('email wrong');
+      this.feedBackL = "Ungültige Email.";
     }
   }
 
-  loginCallback(data){
-    var obj = JSON.parse(data['_body']);//.toJson();
-    console.log("1" + data);
-    console.log("2" + obj);
-    console.log("3" + obj['message']);
-    console.log("4" + obj.message);
+  userData;
 
-    this.feedBack = obj.message;
+  loginCallback(data) {
     console.log(data);
-    console.log(this.feedBack);
+    if (data.message != 'Erfolgreiche Anmeldung.') {
+      this.validatorL = data.message;
+    } else {
+      // this.userData = data['_body'];
+      this.sg['user'] = data;
+      localStorage.setItem('user', JSON.stringify(data));
+      this._router.navigateByUrl('/');
+    }
+
   }
 
   register() {
-    this.validator = "";
+    this.resetFeedback();
     if (this.validateRegister()) {
-      this.rps.postRequest('/api/account/register', this.registerData).subscribe(
+      this.rps.postRequest('/api/user/register', this.registerData).subscribe(
         data => this.registerCallback(data),
         // The 2nd callback handles errors.
-        (err) => this.errorHandling(err),
+        (err) => this.errorHandling(err, 'r'),
         // The 3rd callback handles the "complete" event.
         () => this.completeCallback() //
-       );
+      );
     } else {
-      console.log('email wrongs');
-      this.validator = "Invalid Email.";
+      console.log("register failure");
     }
   }
 
-  registerCallback(data){
-    this.feedBack = data['_body'];
+  registerCallback(data) {
+    this.feedBackR = data['_body'];
+    if(this.feedBackR.indexOf('Fehler') < 0){
+      this.feedBackR = this.feedBackR;
+    } else {
+      this.validatorR = this.feedBackR;
+    }
     console.log(data);
-    console.log(this.feedBack);
   }
 
   validateRegister() {
     this.registerData = {};
-    if (this.eMailRegister.match(this.regex)) {
-      //registerData['email'] = this.eMailRegister;
-      if(this.passwordRegister.length >= 6 && this.passwordRegister === this.passwordRegisterRep){
-        if(this.usernameRegister.length >= 4){
-          this.registerData = {
-            "username" : this.usernameRegister,
-          	"email" : this.eMailRegister,
-          	"password" : this.passwordRegister
-          }
-          return true;
-        } else {
-          this.validator = "Username has to be at least 4 characters.";
-          return false;
-        }
-      } else {
-        this.validator = "Invalid Password (min Length = 6, has to match repeat).";
-        return false;
-      }
-    } else {console.log('email wrong');
-      this.validator = "Invalid Email.";
+    if (!this.eMailRegister.match(this.regex)) {
+      this.validatorR = "Ungültige Emailadresse.";
       return false;
+    }
+    if (this.passwordRegister.length < 6) {
+      this.validatorR = "Das Passwort muss mindesten 6 Zeichen lang sein.";
+      return false;
+    }
+    if (!this.passwordRegister === this.passwordRegisterRep) {
+      this.validatorR = "Passwörter stimmen nicht überein.";
+      return false;
+    }
+    //registerData['email'] = this.eMailRegister;
+    if (this.usernameRegister.length < 6 || this.usernameRegister.indexOf('@') >= 0) {
+      this.feedBackR = "Der Benutzername soll aus mindestens 6 Buchstaben bestehen und darf kein @ beinhalten.";
+      return false;
+    }
+    this.registerData = {
+      "username": this.usernameRegister,
+      "email": this.eMailRegister,
+      "password": this.passwordRegister
+    }
+    return true;
+  }
+
+  errorHandling(err, mode) {
+    if (mode === 'r') {
+      this.feedBackR = err;
+    } else {
+      this.feedBackL = err;
+      
     }
   }
 
-  errorHandling(err){
-    console.error("Error: "+err);
-  }
-
-  completeCallback(){ // validates whether data could be fetched or not
-    console.log("Post Completed!");
+  completeCallback() { // validates whether data could be fetched or not
   }
 
 }

@@ -14,3 +14,13 @@ body {
 .justify { text-align: justify; }
 .start   { text-align: start; }
 .end     { text-align: end; }
+
+
+.llink {
+  cursor:pointer;
+  color:#0275d8;
+}
+
+.llink:hover {
+  color: #014c8c;
+}

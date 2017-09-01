@@ -1,11 +1,11 @@
 <div>
   <!-- Anmeldung -->
-  <p style="color: blue;">{{feedBack}}</p>
-  <p style="color: red;">{{validator}}</p>
+
   <div>
     <h2>Anmeldung</h2>
     <div class="form-content">
-
+      <p style="color: blue;">{{feedBackL}}</p>
+      <p style="color: red;">{{validatorL}}</p>
       <div class="form-group row" align="center">
         <label style="float:left;" class="col-sm-12 col-md-4" for="lun">E-Mail Adresse: </label>
         <input [(ngModel)]="emailLogin" class="col-sm-12 col-md-6" type="text" id="lun">
@@ -21,9 +21,11 @@
   <!-- Registrierung -->
   <div>
     <h2>Neu hier?
-    <br/>Kostenlos regestrieren:</h2>
+    <br/>Kostenlos registrieren:</h2>
     <div class="form-content">
 
+      <p style="color: blue;">{{feedBackR}}</p>
+      <p style="color: red;">{{validatorR}}</p>
       <div class="form-group row" align="center">
         <label style="float:left;" class="col-sm-12 col-md-4" for="run">Benutzername: </label>
         <input [(ngModel)]="usernameRegister" class="col-sm-12 col-md-6" type="text" id="run">
@@ -44,3 +46,6 @@
     </div>
   </div>
 </div>
+<!-- <div>
+  {{registerData}}
+</div> -->
