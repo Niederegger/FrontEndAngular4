@@ -32,12 +32,16 @@ export class StammdatenComponent implements OnInit {
     public sg: SimpleGlobal,
     private gfs: GlobalFunctionService,
   ) {
+    this.editToggle = false;
+    this.urlListened = false;
     this.router.events.subscribe(path => {
       this.listenUrl(path['url']);
     }); // eventlistener on url change
   }
 
   ngOnInit(): void {
+    this.urlListened = false;
+    this.editToggle = false;
     this.sg['state'] = 'quellen';
     this.btAnpassenText = 'Bearbeiten';
   }
@@ -47,14 +51,12 @@ export class StammdatenComponent implements OnInit {
   //-------------------------------------------------------
 
   listenUrl(asd) {
-    if (!this.urlListened) {
-      this.search(asd);
-    }
     this.urlListened = true;
+    this.search(asd);
   }
 
   search(Url) {
-    if (!this.sg['isin'] || this.sg['prevIsin']) {
+    if (!this.sg['isin'] || this.sg['prevIsin'] || !this.stammdaten) {
       this.sg['prevIsin'] = this.sg['isin'];
       // hackerish but works
       const str: string = (Url + '');
@@ -68,9 +70,13 @@ export class StammdatenComponent implements OnInit {
   //-------------------------------------------------------
 
   errorHandling(err, state) {
-    if (state === '') {
+    if (state === 'fetchStammdaten') {
       this.valid = false;
       this.error = 'Es wurden keine Informationen zur folgenden Suche gefunden: ' + this.sg['isin'] + '!';
+    } else if(state === 'fetchStammdaten'){
+
+    } else if(state === 'saveEdit'){
+      
     }
   }
 
@@ -111,9 +117,7 @@ export class StammdatenComponent implements OnInit {
       this.valid = false;
       return false;
     }
-    if (this.sg['prevIsin'] !== this.sg['isin']) {
-      return true;
-    }
+    return true;
   }
 
   saveCallback(data) {
@@ -192,5 +196,15 @@ export class StammdatenComponent implements OnInit {
         return true;
       }
     } return false;
+  }
+
+  viewStammdaten() {
+    if (!this.editToggle) {
+      if (!this.stammdaten) {
+        this.fetchStammdaten();
+      }
+      return true;
+    }
+    return false;
   }
 }
