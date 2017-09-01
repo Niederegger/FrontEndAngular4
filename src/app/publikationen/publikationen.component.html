@@ -98,7 +98,7 @@
       </div>
     </div>
     <br>
-    <input #fileInput [(ngModel)]="fileUpload" (change)="getFiles($event)" type="file" accept=".pdf, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+    <input #fileInput (change)="getFiles($event)" type="file" accept=".pdf, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
     <button (click)="upload()" class="btn btn-default" type="button">Upload</button>
 
     <br>
