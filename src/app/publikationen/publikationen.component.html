@@ -3,7 +3,7 @@
   <p align="left"><b>ISIN: {{sg['isin']}}</b></p>
   <!-- <br> -->
   <!--/ISIN ANZEIGE-->
-
+  <img *ngIf="loading" src="/assets/loader2.gif">
   <!--Tabelle an Publikationen-->
   <div class="container" class="table">
     <table *ngIf="fileData">
@@ -69,7 +69,7 @@
           </td>
           <td class="text-left">
             <font size="2">
-              {{ fd.source }} - {{ fd.url }}
+              {{ fd.source }} {{ fd.url }}
             </font>
           </td>
           <td>
@@ -85,7 +85,7 @@
 
   <!--Publikation einreichen-->
   <div>
-    <span class="pull-left"><b>Dokument einreichen:</b></span>
+    <span class="pull-left"><b>Dokument einreichen</b> (max 64MB)<b>:</b></span>
     <br>
     <br>
     <!--UserFeedback-->

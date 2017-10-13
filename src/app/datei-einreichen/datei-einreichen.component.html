@@ -1,0 +1,60 @@
+<div>
+  <p>Hier können Sie Dateien mit Informationen zu all Ihren Produkten hochladen, sodass wir diese für Sie aufbereiten und Anzeigen
+    können.
+  </p>
+  <br>
+
+  <img *ngIf="loading" src="/assets/loader2.gif">
+  <!--Datei einreichen-->
+  <div>
+    <span class="pull-left"><b>Datei einreichen</b> (max 64MB)<b>:</b></span>
+    <br>
+    <br>
+    <!--UserFeedback-->
+    <p align="left" style="color: red;">{{feedback}}</p>
+    <div class="row">
+      <!-- Quelle -->
+      <div class="col-lg-3 col-12"><span class="pull-left" align="left"><b>Unternehmen:</b> *</span></div>
+      <div class="col-lg-9 pull-right">
+        <input placeholder="zB: Blackrock" [(ngModel)]="unternehmen" style="width:66%;" type="text" class="pull-left" />
+      </div>
+      <div class="col-lg-3 col-12"><span class="pull-left" align="left"><b>Beschreibung:</b> *</span></div>
+      <div class="col-lg-9 pull-right">
+        <input placeholder="zB: Index Fonds" [(ngModel)]="beschreibung" style="width:66%;" type="text" class="pull-left" />
+      </div>
+    </div>
+    <br>
+    <input #fileInput type="file" (change)="getFiles($event)">
+    <button (click)="upload()" class="btn btn-default" type="button">Upload</button>
+
+    <br>
+  </div>
+  <br>
+  <hr>
+  <br>
+  <table>
+    <thead>
+      <tr>
+        <th width="35%" class="text-left">Name</th>
+        <th width="20%" class="text-left">Unternehmen</th>
+        <th width="25%" class="text-left">Beschreibung</th>
+        <th width="10%" class="text-left">Datum</th>
+        <th width="10%" class="text-left"></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="fileData">
+      <tr *ngFor="let fd of fileData.intern">
+        <td class="text-left">
+          <a href="/api/file/download?fn={{fd.fileName}}&ts={{gfs.prepareTs(fd.timeStamp)}}">{{ fd.fileName }}</a>
+        </td>
+        <td class="text-left">{{fd.dataOrigin}}</td>
+        <td class="text-left">{{fd.comment}}</td>
+        <td class="text-left">{{gfs.cutTimestamp(fd.timeStamp)}}</td>
+        <td>
+            <button (click)="removeFile(fd.fileName, gfs.prepareTs(fd.timeStamp))" class="btn btn-default" type="button">löschen</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

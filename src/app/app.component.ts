@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SimpleGlobal } from 'ng2-simple-global';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,8 @@ import { SimpleGlobal } from 'ng2-simple-global';
 })
 export class AppComponent implements OnInit {
 
-  constructor(public sg: SimpleGlobal) { }
+  constructor(public sg: SimpleGlobal,
+    private _router: Router,) { }
 
   ngOnInit(): void {
     this.sg['state'] = 'start';
@@ -19,5 +21,6 @@ export class AppComponent implements OnInit {
   logout(){
     this.sg['user'] = null;
     localStorage.setItem('user', null);
+    this._router.navigateByUrl('/');
   }
 }

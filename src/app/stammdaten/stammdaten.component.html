@@ -3,11 +3,57 @@
 <br>
 <p *ngIf="!valid" style="color:red;">{{error}}</p>
 <div style="margin-bottom: 61px;" class="container left" *ngIf="valid">
-  <button (click)="toogleEdit(!editToggle)" class='left' type="button">{{btAnpassenText}}</button> <button *ngIf="editToggle"
-    (click)="saveEdit()" class='left' type="button">Speichern</button><br>
+  <button (click)="toogleEdit(!editToggle)" class='left' type="button">{{btAnpassenText}}</button>
+  <button *ngIf="editToggle" (click)="saveEdit()" class='left' type="button">Speichern</button>
+  <!-- <button *ngIf="sg['user']" (click)="fetchMappings()" class='left' type="button">{{sfText}}</button> -->
+  <br>
   <hr>
 
   <!-- view -->
+  <img *ngIf="loading" src="/assets/loader2.gif">
+
+
+  <ng-container *ngIf="sfAnzeigen">
+    <!-- mapped -->
+    <p>bereits Eingetragen</p>
+    <table>
+      <thead>
+        <tr>
+          <th width="15%">Source</th>
+          <th width="20%">SourceField</th>
+          <th width="20%">WpWikiField</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of mapped">
+          <td>{{m.source}}</td>
+          <td>{{m.fieldname}}</td>
+          <td>{{m.mapname}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr><br>
+    <!-- unmapped -->
+    <p>noch offen</p>
+    <table>
+      <thead>
+        <tr>
+          <th width="15%">Source</th>
+          <th width="20%">WpWikiField</th>
+          <th width="20%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of unmapped">
+          <td>{{m.source}}</td>
+          <td>{{m.fieldname}}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <hr><br>
+  </ng-container>
+
   <table *ngIf="viewStammdaten()">
 
     <thead class="underliner">
@@ -61,7 +107,7 @@
                     <span>{{entries.origin}}</span><br>
                     <a target="_blank" href='{{entries.source}}'>{{gfs.adjustUrl(entries.source, 48)}}</a><br>
                   </div>
-                  <p class="left" *ngIf="!gfs.validUrl(entries.source)">{{entries.source}} - {{entries.origin}}</p>
+                  <p class="left" *ngIf="!gfs.validUrl(entries.source)">{{entries.source}} {{entries.origin}}</p>
                 </font>
               </td>
               <td></td>

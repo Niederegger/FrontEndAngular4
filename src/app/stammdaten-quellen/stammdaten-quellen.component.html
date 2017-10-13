@@ -43,7 +43,7 @@
               <a class="left" target="_blank" href='{{item.urlsource}}'>{{item.urlsource}}</a><br>
               <span class="left">{{item.data_origin}}</span>
             </div>
-            <p class="left" *ngIf="!gfs.validUrl(item.urlsource)">{{item.urlsource}} - {{item.data_origin}}</p>
+            <p class="left" *ngIf="!gfs.validUrl(item.urlsource)">{{item.urlsource}} {{item.data_origin}}</p>
           </font>
         </td>
       </tr>
@@ -52,5 +52,5 @@
 </div>
 
 <div *ngIf="!valid">
-  <p>Einen Moment Gedult.</p>
+  <p><img *ngIf="loading" src="/assets/loader2.gif"></p>
 </div>

@@ -24,6 +24,12 @@ export class StammdatenComponent implements OnInit {
   btAnpassenText;           // Text Fuer den Button, welcher Edit/View Mode toggled
   fields;                   // Container fuer den FetchFieldResult
   fReady;                   // boolean flag die anzeigt ob die Feld Definitionen bereits angekommen sind
+  loading = false;          // Flag ob eine Ladeanimation angezeigt werden soll oder nicht
+
+  sfAnzeigen = false;
+  sfText = "Anzeige Anpassen";
+  mapped;
+  unmapped;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,37 +38,20 @@ export class StammdatenComponent implements OnInit {
     public sg: SimpleGlobal,
     private gfs: GlobalFunctionService,
   ) {
+    this.loading = true;
     this.editToggle = false;
-    this.urlListened = false;
-    this.router.events.subscribe(path => {
-      this.listenUrl(path['url']);
-    }); // eventlistener on url change
+    this.route.params.subscribe( params => this.sg['isin'] = params.v);
+    this.fetchStammdaten();
+    this.loading = false;
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.urlListened = false;
     this.editToggle = false;
     this.sg['state'] = 'quellen';
     this.btAnpassenText = 'Bearbeiten';
-  }
-
-  //-------------------------------------------------------
-  // URL-ISIN-Listener
-  //-------------------------------------------------------
-
-  listenUrl(asd) {
-    this.urlListened = true;
-    this.search(asd);
-  }
-
-  search(Url) {
-    if (!this.sg['isin'] || this.sg['prevIsin'] || !this.stammdaten) {
-      this.sg['prevIsin'] = this.sg['isin'];
-      // hackerish but works
-      const str: string = (Url + '');
-      this.sg['isin'] = str.split('/', 3)[2];
-      this.fetchStammdaten();
-    }
+    this.loading = false;
   }
 
   //-------------------------------------------------------
@@ -81,6 +70,7 @@ export class StammdatenComponent implements OnInit {
   }
 
   completeCallback(str) {
+    this.loading = false;
     if (str === 'fetchStammdaten') {
       if (this.stammdaten == null) {
         this.valid = false;
@@ -104,6 +94,7 @@ export class StammdatenComponent implements OnInit {
   //-------------------------------------------------------
   fetchStammdaten() {
     if (this.validateFetchStammdaten()) {
+      this.loading = true;
       this.rps.getRequest('/api/wp/quellenSet?v=' + this.sg['isin']).subscribe(
         data => this.saveCallback(data),
         (err) => this.errorHandling(err, 'fetchStammdaten'),
@@ -129,6 +120,7 @@ export class StammdatenComponent implements OnInit {
   //-------------------------------------------------------
   fetchFieldNames() {
     this.fReady = false;
+    this.loading = true;
     this.rps.getRequest('/api/wp/getFields').subscribe(
       data => this.fetchFielCallback(data),
       (err) => this.errorHandling(err, 'FetchFieldNames'),
@@ -145,6 +137,7 @@ export class StammdatenComponent implements OnInit {
   saveEdit() {
     this.fields.container['ISIN'][0].str2 = this.sg['isin'];
     this.fields.user = this.sg['user'];
+    this.loading = true;
     this.rps.postRequest('/api/wp/pushData', this.fields).subscribe(
       data => this.saveEditCallBack(data),
       (err) => this.errorHandling(err, 'saveEdit'),
@@ -160,6 +153,32 @@ export class StammdatenComponent implements OnInit {
       this.keyOrder = data['keyOrder'];
     }
     this.toogleEdit(false);
+  }
+  //-------------------------------------------------------
+  // SourceFields
+  //-------------------------------------------------------
+  fetchMappings() {
+    if (!this.sg['user']) { return; }
+    if(!this.sfAnzeigen){
+      this.loading = true;
+      this.rps.getRequest('/api/wp/mappings?v=' + this.sg['isin']).subscribe(
+        data => this.saveSourceFieldsCallBack(data),
+        (err) => this.errorHandling(err, 'fetchMappings'),
+        () => this.completeCallback('fetchMappings')
+      );
+    } else {
+      this.sfAnzeigen = false;
+      this.sfText = "Mapping anpassen";
+    }
+  }
+
+  saveSourceFieldsCallBack(data){
+    if(data != null){
+      this.mapped  =data.mapped;
+      this.unmapped  =data.unmapped;
+    } 
+    this.sfText = "Mapping verbergen";
+    this.sfAnzeigen = true;
   }
 
   //----------------------------------------------------------------------------------------------------------

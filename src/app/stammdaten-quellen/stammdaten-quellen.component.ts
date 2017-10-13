@@ -18,6 +18,7 @@ export class StammdatenQuellenComponent implements OnInit {
   valid;                  // flag ob bereits gueltige daten vom server erhalten worden sind
   error;                  // Error Message
   fetchedData;            // speichern des ResultSets vom BackEndServer
+  loading = false;          // Flag ob eine Ladeanimation angezeigt werden soll oder nicht
 
   constructor(
     private route: ActivatedRoute,
@@ -26,35 +27,16 @@ export class StammdatenQuellenComponent implements OnInit {
     public sg: SimpleGlobal,
     public gfs: GlobalFunctionService
   ) {
-    this.router.events.subscribe(path => {
-      this.listenUrl(path['url']);
-    });
+    this.loading = true;
+    this.route.params.subscribe( params => {this.sg['isin'] = params.v; this.sg['sqn'] = params.w} );
+    this.fetchStammdatenQuellen();
+    this.loading = false;
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.sg['state'] = 'quellen';
-  }
-
-  //-------------------------------------------------------
-  // URL-ISIN-Listener
-  //-------------------------------------------------------
-
-  listenUrl(asd) {
-    if (!this.urlListened) {
-      this.search(asd)
-    }
-    this.urlListened = true;
-  }
-
-  search(searchRequest) {
-    if (!this.sg['isin'] || this.sg['prevIsin']) {
-      this.sg['prevIsin'] = this.sg['isin'];
-      const str: string = (searchRequest + '');
-      const strspl = str.split('/');
-      this.sg['isin'] = strspl[2];
-      this.sg['sqn'] = strspl[4];
-      this.fetchStammdatenQuellen();
-    }
+    this.loading = false;
   }
 
   //-------------------------------------------------------
@@ -70,6 +52,7 @@ export class StammdatenQuellenComponent implements OnInit {
   }
 
   completeCallback() {
+    this.loading = false;
     if (this.fetchedData) {
       this.valid = true;
     }
@@ -80,6 +63,7 @@ export class StammdatenQuellenComponent implements OnInit {
   //-------------------------------------------------------
 
   fetchStammdatenQuellen() {
+    this.loading = true;
     if (this.validateFetchStammdaten()) {
       this.rps.getRequest('/api/wp/quellenAnsehen?v=' + this.sg['isin'] + '&s=' + this.sg['sqn']).subscribe(
         data => this.saveCallback(data),
@@ -90,6 +74,7 @@ export class StammdatenQuellenComponent implements OnInit {
   }
 
   validateFetchStammdaten() {
+    this.loading = true;
     if (!(this.sg['isin'].length === 12 || this.sg['isin'].length === 6)) {
       this.error = 'Der Suchbegriff ist weder eine ISIN noch eine WKN';
       this.valid = false;

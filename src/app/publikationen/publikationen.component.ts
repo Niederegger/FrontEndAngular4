@@ -1,6 +1,6 @@
 import { Url } from 'url';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {  ActivatedRoute, Params, Router } from '@angular/router';
 
 import { SimpleGlobal } from 'ng2-simple-global';
 
@@ -20,41 +20,26 @@ export class PublikationenComponent implements OnInit {
   fileBezeichnung: string;  // Die Bezeichnung fuer die zu hochladende Datei
   files: FileList;          // Container, enthaellt die ausgewaehlte Datei
   urlListened: boolean;     // flag ob bereits die ISIN aus der URL gelesen wurde
-
+  loading = false;          // Flag ob eine Ladeanimation angezeigt werden soll oder nicht
+  
   constructor(
+    private route: ActivatedRoute,
     private _router: Router,
     private rps: RestProviderService,
     private gfs: GlobalFunctionService,
     public sg: SimpleGlobal
   ) {
-    // eventlistener on url change
-    this._router.events.subscribe(path => { this.listenUrl(path['url']); });
+    this.loading = true;
+    this.route.params.subscribe( params => this.sg['isin'] = params.v);
+    this.fetchFiles();
+    this.loading = false;
   }
 
   ngOnInit() {
+    this.loading = true;
     this.sg['state'] = 'publikationen';
     this.fetchFiles();
-  }
-
-  //-------------------------------------------------------
-  // URL-ISIN-Listener
-  //-------------------------------------------------------
-
-  listenUrl(url) {
-    if (!this.urlListened) {
-      this.search(url);
-    }
-    this.urlListened = true;
-  }
-
-  search(Url) {
-    if (!this.sg['isin'] || this.sg['prevIsin']) {
-      this.sg['prevIsin'] = this.sg['isin'];
-      // hackerish but works
-      const str: string = (Url + '');
-      this.sg['isin'] = str.split('/', 3)[2];
-      this.fetchFiles();
-    }
+    this.loading = false;
   }
 
   //-------------------------------------------------------
@@ -62,6 +47,7 @@ export class PublikationenComponent implements OnInit {
   //-------------------------------------------------------
 
   completeCallback(st) {
+    this.loading = false;
     if (st === 'fetch') {
     } else if (st === 'delete') {
       this.fetchFiles();
@@ -80,6 +66,7 @@ export class PublikationenComponent implements OnInit {
   // Fetch
   //----------------------------------------------------------------------------
   fetchFiles() {
+    this.loading = true;
     this.rps.getRequest('/api/file/fetchFileData?isin=' + this.sg['isin'])
       .subscribe(
       data => this.fetchFilesCallback(data),
@@ -96,6 +83,7 @@ export class PublikationenComponent implements OnInit {
   // Remove
   //----------------------------------------------------------------------------
   removeFile(fileName, timeStamp) {
+    this.loading = true;
     this.rps.postRequest('/api/file/remove', { 'str1': fileName, 'str2': timeStamp, })
       .subscribe(
       data => this.removeFileCallback(data),
@@ -114,6 +102,7 @@ export class PublikationenComponent implements OnInit {
   upload() {
     this.einreichenErrorMsg = '';
     if (this.validateUpload()) {
+      this.loading = true;
       this.rps.postFile('/api/file/uploadFile', this.prepareUploadData()).subscribe(
         data => this.uploadCallback(data),
         (err) => this.errorHandling(err),
